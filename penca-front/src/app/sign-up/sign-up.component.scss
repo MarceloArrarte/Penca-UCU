@@ -1,33 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 nb-layout-column {
+    font-family: 'Roboto', sans-serif;
+
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #1a1a1a;
+    background-color: #121212;
   }
   
   nb-card {
     width: 90%;
     max-width: 400px;
-    background-color: #2a2a2a;
+    background-color: #1e1e2f;
     border-radius: 12px;
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
   .header {
+    padding-top: 2rem;
     font-size: 1.5rem;
     text-align: center;
-    margin-bottom: 1rem;
   }
+  form{
+
   
   label {
     display: block;
     margin: 0.5rem 0 0.25rem;
   }
+
+  input {
+    background-color: #2a2a3b;
+    color: #ffffff;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+  }
   
   button {
-    margin-top: 1rem;
-    background: linear-gradient(90deg, rgba(58,117,255,1) 0%, rgba(173,73,255,1) 100%);
+    background: linear-gradient(to right, #667eea, #764ba2);
     border: none;
+    color: #ffffff;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s;
+    width: 100%;
+    margin-top: 1rem;
+
+
+    &:hover {
+      background: linear-gradient(to right, #564aa2, #564ba2);
+    }
   }
+}
