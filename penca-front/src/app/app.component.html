@@ -1,8 +1,10 @@
 <nb-layout>
-  <nb-layout-header fixed>Company Name</nb-layout-header>
+  <nb-layout-header fixed>
+    <h1>{{ h1Title$ | async }}</h1>
+  </nb-layout-header>
   
   <nb-layout-column>
-    Page Content <button nbButton>Hello World</button>
+    <router-outlet></router-outlet>
   </nb-layout-column>
 
   <nb-layout-footer fixed></nb-layout-footer>
