@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.login-container {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212;
+  }
+  
+  nb-card {
+    padding-top: 20px;
+    width: 100%;
+    max-width: 400px;
+    background-color: #1e1e2f;
+    color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+    nb-card-header {
+      text-align: center;
+      border-bottom: 1px solid #444;
+  
+      h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+  
+      p {
+        margin: 0.5rem 0 1rem;
+        font-size: 0.9rem;
+        color: #b5b5c3;
+      }
+    }
+  
+    nb-card-body {
+      padding: 2rem;
+  
+      .form-group {
+        margin-bottom: 1.5rem;
+  
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          color: #b5b5c3;
+        }
+  
+        input {
+          background-color: #2a2a3b;
+          color: #ffffff;
+          border: 1px solid #444;
+          border-radius: 4px;
+          padding: 0.5rem 1rem;
+        }
+  
+        .forgot-password-container {
+          text-align: right;
+        }
+  
+        .forgot-password {
+          font-size: 0.875rem;
+          color: #667eea;
+          text-decoration: none;
+          text-align: center;
+  
+          &:hover {
+            color: #a3a3a3;
+          }
+        }
+      }
+  
+      button {
+        background: linear-gradient(to right, #667eea, #764ba2);
+        border: none;
+        color: #ffffff;
+        padding: 0.75rem;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: bold;
+        transition: background 0.3s;
+  
+        &:hover {
+          background: linear-gradient(to right, #564aa2, #564ba2);
+        }
+      }
+    }
+  }  
