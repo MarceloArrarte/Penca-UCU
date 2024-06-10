@@ -8,6 +8,7 @@ services:
       - mysql-db
     volumes:
       - ./penca-front:/app
+      - /app/node_modules
     ports:
       - ${FRONTEND_PORT}:4200
 
@@ -17,6 +18,7 @@ services:
       - mysql-db
     volumes:
       - ./penca-back:/app
+      - /app/node_modules
     ports:
       - ${BACKEND_PORT}:8000
 
