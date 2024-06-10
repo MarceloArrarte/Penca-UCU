@@ -1,0 +1,33 @@
+nb-layout-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a1a1a;
+  }
+  
+  nb-card {
+    width: 90%;
+    max-width: 400px;
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .header {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  label {
+    display: block;
+    margin: 0.5rem 0 0.25rem;
+  }
+  
+  button {
+    margin-top: 1rem;
+    background: linear-gradient(90deg, rgba(58,117,255,1) 0%, rgba(173,73,255,1) 100%);
+    border: none;
+  }
