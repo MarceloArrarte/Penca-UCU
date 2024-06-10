@@ -1,0 +1,107 @@
+nb-card {
+    border-radius: 10px;
+
+    &:first-child {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+}
+
+nb-card-body {
+    padding-top: 0;
+    padding-bottom: .4rem;
+    border-bottom: 2px solid whitesmoke;
+}
+
+
+.card-resultado {
+    display: flex;
+    justify-content: space-around;
+}
+
+app-team-img {
+    flex-basis: 40%;
+    padding: 1.5rem;
+    padding-bottom: .5rem;
+    
+    &:first-child {
+        padding-left: 0;
+        margin-right: 1rem;
+    }
+
+    &:last-child {
+        padding-right: 0;
+        margin-left: 1rem;
+    }
+}
+
+.resultado {
+    flex-basis: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-align: center;
+    min-width: 40%;
+
+    .goles-resultado {
+        font-size: 150%;
+        margin-top: 30%;
+
+        .spacing-prediccion, .spacing-resultado {
+            letter-spacing: 5px;
+        }
+    }
+
+    .goles-prediccion {
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: .3rem 1rem;
+        border-radius: 20px;
+
+        &.prediccion-exacta {
+            background-color: #87b387;
+        }
+    
+        &.prediccion-correcta {
+            border: 1px solid #87b387;
+            color: #87b387;
+        }
+    
+        &.prediccion-errada {
+            border: 1px solid #f68b73;
+            color: #f68b73;
+        }
+    
+        &.prediccion-no-ingresada {
+            border: 1px solid #acacac;
+            color: #b8b8b8;
+        }
+    }
+}
+
+nb-card-footer {
+    padding: .5rem;
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        font-size: 80%;
+        display: inline-block;
+        margin: 0;
+    }
+
+    &:is(.suma-puntos, .no-suma-puntos) p {
+        &:last-child {
+            font-weight: bold;
+        }
+    }
+
+    &.suma-puntos p {
+        color: #87b387;
+    }
+
+    &.no-suma-puntos p {
+        color: #f68b73;
+    }
+}

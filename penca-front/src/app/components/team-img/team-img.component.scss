@@ -1,5 +1,6 @@
 :host {
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 img {
@@ -8,6 +9,7 @@ img {
     margin-bottom: 15%;
 }
 
-.nombre-equipo {
+p {
     text-align: center;
+    margin: 0 -50%;
 }
