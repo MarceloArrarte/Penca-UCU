@@ -1,0 +1,85 @@
+nb-card {
+    border-radius: 10px;
+
+    &:first-child {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+}
+
+nb-card-body {
+    padding-top: 0;
+    padding-bottom: .4rem;
+    border-bottom: 2px solid whitesmoke;
+}
+
+
+.card-resultado {
+    display: flex;
+    justify-content: space-around;
+}
+
+app-team-img {
+    flex-basis: 40%;
+    padding: 1.5rem;
+    padding-bottom: .5rem;
+    
+    &:first-child {
+        padding-left: 0;
+        margin-right: 1rem;
+    }
+
+    &:last-child {
+        padding-right: 0;
+        margin-left: 1rem;
+    }
+}
+
+.prediccion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 40%;
+    
+
+    button {
+        flex-basis: 20%;
+        background-color: #87b387;
+        border: none;
+        min-width: 30%;
+        line-height: 1.5rem;
+    
+        &:hover {
+            background-color: #79a379;
+        }
+    
+        &:focus {
+            background-color: #709670;
+        }
+    
+        &.ingresada {
+            font-size: 150%;
+    
+            .spacing-prediccion {
+                letter-spacing: 10px;
+            }
+        }
+    
+        &.no-ingresada {
+            font-size: 80%;
+            padding: .5rem .8rem;
+        }
+    }
+}
+
+nb-card-footer {
+    padding: .5rem;
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        font-size: 80%;
+        display: inline-block;
+        margin: 0;
+    }
+}

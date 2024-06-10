@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MainTitleService } from './services/main-title.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'penca-front';
+  h1Title$: Observable<string>;
+
+  constructor(mainTitleService: MainTitleService) {
+    this.h1Title$ = mainTitleService.title$.asObservable();
+  }
 }

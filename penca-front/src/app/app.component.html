@@ -1,2 +1,16 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <h1>{{ h1Title$ | async }}</h1>
+  </nb-layout-header>
+  
+  <nb-layout-column>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </nb-layout-column>
+
+  <nb-layout-footer fixed></nb-layout-footer>
+</nb-layout>
+
 <app-sign-up></app-sign-up>
 <app-login></app-login>

@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-3" *ngFor="let match of matches$ | async">
+        <nb-card>
+            <nb-card-body>
+                <div class="card-resultado">
+                    <app-team-img [equipo]="match.equipos[0]" [width]="'20%'"></app-team-img>
+                    <div class="prediccion">
+                        <button *ngIf="match.prediccion; else btnIngresar" class="ingresada" nbButton status="primary" shape="round">
+                            <span class="spacing-prediccion">{{ match.prediccion[0] }}-</span>
+                            {{ match.prediccion[1] }}
+                        </button>
+
+                        <ng-template #btnIngresar>
+                            <button nbButton class="no-ingresada" status="primary" shape="round">
+                                Ingresar
+                            </button>
+                        </ng-template>
+                    </div>
+                    <app-team-img [equipo]="match.equipos[1]" [width]="'20%'"></app-team-img>
+                </div>
+            </nb-card-body>
+            <nb-card-footer>
+                <p>{{ match.datetime | date: "dd/MM/yyyy hh:mm" }}</p>
+                <p>{{ match.fase }} - Jornada {{ match.jornada }}</p>
+            </nb-card-footer>
+        </nb-card>
+    </div>
+</div>
