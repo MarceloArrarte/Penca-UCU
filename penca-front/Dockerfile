@@ -1,10 +1,10 @@
-FROM node:22.2.0
+FROM node:18.20.3
 
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY . .
 RUN npm install
+RUN npm install -g @angular/cli@15
 
 EXPOSE 4200
 
-COPY . .
-CMD npm start
+ENTRYPOINT npm start
