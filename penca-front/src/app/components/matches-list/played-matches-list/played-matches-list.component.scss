@@ -58,23 +58,27 @@ app-team-img {
         margin-right: auto;
         padding: .3rem 1rem;
         border-radius: 20px;
+        border-width: 2px;
+        font-weight: bold;
+        font-size: 120%;
 
         &.prediccion-exacta {
+            border: none;
             background-color: #87b387;
         }
     
         &.prediccion-correcta {
-            border: 1px solid #87b387;
+            border: solid #87b387;
             color: #87b387;
         }
     
         &.prediccion-errada {
-            border: 1px solid #f68b73;
+            border: solid #f68b73;
             color: #f68b73;
         }
     
         &.prediccion-no-ingresada {
-            border: 1px solid #acacac;
+            border: solid #acacac;
             color: #b8b8b8;
         }
     }
