@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
+  nombre: string = '';
+  documento: string = '';
+  email: string = '';
+  contrasena: string = '';
 
+  constructor() {}
 }
