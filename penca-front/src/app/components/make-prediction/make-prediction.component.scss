@@ -1,0 +1,28 @@
+app-team-img, app-up-down-input {
+    display: inline-block;
+    width: 40%;
+}
+
+::ng-deep app-team-img p {
+    font-size: 200% !important;
+    margin-top: 2rem !important;
+}
+
+app-up-down-input {
+    width: 60%;
+    font-size: 160% !important;
+
+    &::ng-deep > div {
+        padding-bottom: 20%;
+    } 
+}
+
+h2 {
+    font-size: 130%;
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}

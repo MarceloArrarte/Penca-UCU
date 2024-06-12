@@ -13,6 +13,8 @@ import { TeamImgComponent } from './components/team-img/team-img.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { FormsModule } from '@angular/forms';
+import { MakePredictionComponent } from './components/make-prediction/make-prediction.component';
+import { UpDownInputComponent } from './components/up-down-input/up-down-input.component';
 
 const nebularModules = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -34,7 +36,9 @@ const nebularModules = [
     PlayedMatchesListComponent,
     TeamImgComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    MakePredictionComponent,
+    UpDownInputComponent
   ],
   imports: [
     BrowserModule,
