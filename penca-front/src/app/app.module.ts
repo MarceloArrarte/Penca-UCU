@@ -10,8 +10,8 @@ import { MatchesListComponent } from './components/matches-list/matches-list.com
 import { UpcomingMatchesListComponent } from './components/matches-list/upcoming-matches-list/upcoming-matches-list.component';
 import { PlayedMatchesListComponent } from './components/matches-list/played-matches-list/played-matches-list.component';
 import { TeamImgComponent } from './components/team-img/team-img.component';
-import { LoginComponent } from './login/login.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { FormsModule } from '@angular/forms';
 
 const nebularModules = [

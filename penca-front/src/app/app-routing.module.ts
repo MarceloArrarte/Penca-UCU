@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatchesListComponent } from './components/matches-list/matches-list.component';
 import { UpcomingMatchesListComponent } from './components/matches-list/upcoming-matches-list/upcoming-matches-list.component';
 import { PlayedMatchesListComponent } from './components/matches-list/played-matches-list/played-matches-list.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,16 @@ const routes: Routes = [
         title: 'Partidos finalizados'
       }
     ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login',
+  },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
+    title: 'Registro',
   },
   {
     path: '**',
