@@ -39,8 +39,6 @@ const getUserByEmailOrDocument = (email: string, document: number): Promise<User
 
       const users = results as RowDataPacket[];
 
-      console.log(users);
-
       resolve(users[0] as User);
     });
   });
@@ -49,18 +47,21 @@ const getUserByEmailOrDocument = (email: string, document: number): Promise<User
 const createUser = (document: number, name: string, email: string, hashedPassword: string,
                     championId: number, runnerUpId: number): Promise<void> => {
   return new Promise((resolve, reject) => {
-    db.query('INSERT INTO usuario (documento, nombre, email, contraseña) values (?, ?, ?, ?)',
-    [document, name, email, hashedPassword],
-    (err, result) => {
+    db.beginTransaction(err => {
       if (err) { return reject(err); }
 
-      db.query('INSERT INTO alumno (documento_usuario, id_campeon, id_subcampeon) values (?, ?, ?)',
-      [document, championId, runnerUpId],
-      (err, _result) => {
-
+      db.query('INSERT INTO usuario (documento, nombre, email, contraseña) values (?, ?, ?, ?)',
+      [document, name, email, hashedPassword],
+      (err, result) => {
         if (err) { return reject(err); }
 
-        resolve()
+        db.query('INSERT INTO alumno (documento_usuario, id_campeon, id_subcampeon) values (?, ?, ?)',
+        [document, championId, runnerUpId],
+        (err, _result) => {
+          if (err) { return db.rollback(() => { return reject(err); }); }
+
+          resolve()
+        });
       });
     });
   });
