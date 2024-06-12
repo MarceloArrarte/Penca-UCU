@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatchesListComponent } from './components/matches-list/matches-list.component';
-import { UpcomingMatchesListComponent } from './components/matches-list/upcoming-matches-list/upcoming-matches-list.component';
-import { PlayedMatchesListComponent } from './components/matches-list/played-matches-list/played-matches-list.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { MatchesListComponent } from './components/views/matches-list/matches-list.component';
+import { UpcomingMatchesListComponent } from './components/views/matches-list/upcoming-matches-list/upcoming-matches-list.component';
+import { PlayedMatchesListComponent } from './components/views/matches-list/played-matches-list/played-matches-list.component';
+import { LoginComponent } from './components/views/login/login.component';
+import { SignUpComponent } from './components/views/sign-up/sign-up.component';
 import { RoleGuard } from './guard/role.guard';
 
 const routes: Routes = [
