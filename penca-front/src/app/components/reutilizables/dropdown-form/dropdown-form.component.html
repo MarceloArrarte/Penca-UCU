@@ -1,0 +1,9 @@
+<nb-select placeholder="Select User" [(ngModel)]="selectedUser" (ngModelChange)="onUserChange($event)" name="selectedUser" style="width: 100%;">
+  <nb-option *ngFor="let user of users" [value]="user">{{ user.name }}</nb-option>
+</nb-select>
+
+<nb-list *ngIf="selectedUser" style="max-height: 200px; overflow-y: auto;">
+  <nb-list-item>
+    <nb-user [name]="selectedUser.name" [picture]="'assets/equipos/' + selectedUser.picture"></nb-user>
+  </nb-list-item>
+</nb-list>
