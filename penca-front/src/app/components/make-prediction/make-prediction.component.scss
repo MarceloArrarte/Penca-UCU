@@ -3,7 +3,7 @@ app-team-img, app-up-down-input {
     width: 40%;
 }
 
-::ng-deep app-team-img p {
+:host ::ng-deep app-team-img p {
     font-size: 200% !important;
     margin-top: 2rem !important;
 }
@@ -15,6 +15,10 @@ app-up-down-input {
     &::ng-deep > div {
         padding-bottom: 20%;
     } 
+}
+
+.action-buttons {
+    font-size: 120%;
 }
 
 h2 {

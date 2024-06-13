@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Match, PlayedMatch } from '../classes/match';
-import { Observable, map, of } from 'rxjs';
+import { Match, MatchPrediction, PlayedMatch } from '../classes/match';
+import { Observable, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ApiRepresentation } from '../utils/types';
 
 @Injectable({
@@ -23,9 +23,28 @@ export class MatchesService {
   }
 
   getMatch(id: number): Observable<Match> {
-    return of(_upcomingMatches[id % _upcomingMatches.length]).pipe(
+    return of(_upcomingMatches.find((match) => match.id == id)).pipe(
+      switchMap((res) => {
+        if (res) {
+          return of(res);
+        }
+        else {
+          return throwError(() => `Partido con ID ${id} no encontrado`);
+        }
+      }),
       map((res) => new Match(res))
     );
+  }
+
+  sendPrediction(matchId: number, prediction: MatchPrediction): Observable<boolean> {
+    const match = _upcomingMatches.find((match) => match.id == matchId);
+
+    if (!match) {
+      return of(false);
+    }
+
+    match.prediccion = prediction;
+    return of(true);
   }
 }
 
@@ -33,6 +52,7 @@ export class MatchesService {
 
 const _upcomingMatches: readonly ApiRepresentation<typeof Match>[] = [
   {
+    id: 1,
     equipos: ['Estados Unidos', 'Jamaica'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
@@ -40,6 +60,7 @@ const _upcomingMatches: readonly ApiRepresentation<typeof Match>[] = [
     prediccion: [2, 0] as [number, number]
   },
   {
+    id: 2,
     equipos: ['Uruguay', 'Argentina'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
@@ -50,6 +71,7 @@ const _upcomingMatches: readonly ApiRepresentation<typeof Match>[] = [
 const _playedMatches: readonly ApiRepresentation<typeof PlayedMatch>[] = [
   // Sin predicción
   {
+    id: 3,
     equipos: ['Uruguay', 'Argentina'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
@@ -58,6 +80,7 @@ const _playedMatches: readonly ApiRepresentation<typeof PlayedMatch>[] = [
   },
   // Predicción exacta
   {
+    id: 4,
     equipos: ['Estados Unidos', 'Jamaica'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
@@ -67,6 +90,7 @@ const _playedMatches: readonly ApiRepresentation<typeof PlayedMatch>[] = [
   },
   // Predicción correcta
   {
+    id: 5,
     equipos: ['Bolivia', 'Chile'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
@@ -76,6 +100,7 @@ const _playedMatches: readonly ApiRepresentation<typeof PlayedMatch>[] = [
   },
   // Predicción errada
   {
+    id: 6,
     equipos: ['Perú', 'Ecuador'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',

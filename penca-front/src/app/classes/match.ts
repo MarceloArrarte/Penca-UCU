@@ -1,17 +1,20 @@
 export class Match {
+  id: number;
   equipos: MatchTeams;
   datetime: Date;
   fase: string;
   jornada: number;
   prediccion?: MatchPrediction;
 
-  constructor({ equipos, datetime, fase, jornada, prediccion }: {
+  constructor({ id, equipos, datetime, fase, jornada, prediccion }: {
+    id: number,
     equipos: MatchTeams,
     datetime: Date,
     fase: string,
     jornada: number,
     prediccion?: MatchPrediction
   }) {
+    this.id = id;
     this.equipos = equipos;
     this.datetime = datetime;
     this.fase = fase;
@@ -24,7 +27,8 @@ export class PlayedMatch extends Match {
   resultado: MatchResult;
 
 
-  constructor({ equipos, datetime, fase, jornada, prediccion, resultado }: {
+  constructor({ id, equipos, datetime, fase, jornada, prediccion, resultado }: {
+    id: number,
     equipos: MatchTeams,
     datetime: Date,
     fase: string,
@@ -32,7 +36,7 @@ export class PlayedMatch extends Match {
     prediccion?: MatchPrediction,
     resultado: MatchResult
   }) {
-    super({ equipos, datetime, fase, jornada, prediccion });
+    super({ id, equipos, datetime, fase, jornada, prediccion });
     
     this.resultado = resultado;
   }

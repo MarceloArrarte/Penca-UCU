@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbTabsetModule, NbRouteTabsetModule, NbCardModule, NbButtonModule, NbInputModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbTabsetModule, NbRouteTabsetModule, NbCardModule, NbButtonModule, NbInputModule, NbToastrModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { MatchesListComponent } from './components/matches-list/matches-list.component';
 import { UpcomingMatchesListComponent } from './components/matches-list/upcoming-matches-list/upcoming-matches-list.component';
@@ -24,7 +24,8 @@ const nebularModules = [
   NbInputModule,
   NbLayoutModule,
   NbRouteTabsetModule,
-  NbTabsetModule
+  NbTabsetModule,
+  NbToastrModule.forRoot()
 ];
 
 
