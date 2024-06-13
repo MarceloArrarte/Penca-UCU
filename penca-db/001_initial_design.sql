@@ -14,7 +14,8 @@ CREATE TABLE carrera (
 CREATE TABLE usuario (
 	documento VARCHAR(15) PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE
+    email VARCHAR(100) NOT NULL UNIQUE,
+    contraseña VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE `admin` (
@@ -42,7 +43,6 @@ CREATE TABLE cursa (
 CREATE TABLE partido (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     fecha_hora DATETIME NOT NULL,
-    numero_en_torneo INT UNSIGNED UNIQUE,
     nombre_fase VARCHAR(50) NOT NULL,
     CONSTRAINT fk_partido_fase FOREIGN KEY (nombre_fase) REFERENCES fase (nombre)
 );
