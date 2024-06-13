@@ -42,14 +42,14 @@ export class UpcomingMatchesListComponent {
       const minutesToStart = match.remainingMinutesToStart;
       this.closedPredictionsInfoEmitter$.next(
         `Solo puedes ${action} predicciones hasta una hora antes del partido.`
-        + `El partido ${match.equipos.join(' - ')} comenzará en ${minutesToStart} minutos.`
+        + ` El partido ${match.equipos.join(' - ')} comenzará en ${minutesToStart} minutos.`
       );
     }
     else {
       const elapsedMinutes = match.elapsedMinutes;
       this.closedPredictionsInfoEmitter$.next(
         `Solo puedes ${action} predicciones hasta una hora antes del partido.`
-        + `El partido ${match.equipos.join(' - ')} comenzó hace ${elapsedMinutes} minutos.`
+        + ` El partido ${match.equipos.join(' - ')} comenzó hace ${elapsedMinutes} minutos.`
       );
     }
   }

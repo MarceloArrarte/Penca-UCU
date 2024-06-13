@@ -24,7 +24,7 @@
                                 nbButton
                                 status="primary"
                                 shape="round"
-                                (click)="navIngresarPrediccion(match.id)"
+                                [ngClass]="{ 'show-disabled': !match.newPredictionAllowed }"
                                 (click)="match.newPredictionAllowed ? navIngresarPrediccion(match.id) : mostrarInfoPrediccionesCerradas(match)"
                             >
                                 Ingresar
