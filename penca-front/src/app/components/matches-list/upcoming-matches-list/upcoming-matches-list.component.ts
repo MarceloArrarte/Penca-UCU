@@ -37,20 +37,19 @@ export class UpcomingMatchesListComponent {
 
   mostrarInfoPrediccionesCerradas(match: Match): void {
     const action = match.prediccion ? 'modificar' : 'ingresar';
+    let message = `Solo puedes ${action} predicciones hasta una hora antes del partido.`
 
     if (isFuture(match.datetime)) {
       const minutesToStart = match.remainingMinutesToStart;
-      this.closedPredictionsInfoEmitter$.next(
-        `Solo puedes ${action} predicciones hasta una hora antes del partido.`
-        + ` El partido ${match.equipos.join(' - ')} comenzará en ${minutesToStart} minutos.`
-      );
+      message += ` El partido ${match.equipos.join(' - ')} comenzará en ${minutesToStart} minutos.`;
+      
+      this.closedPredictionsInfoEmitter$.next(message);
     }
     else {
       const elapsedMinutes = match.elapsedMinutes;
-      this.closedPredictionsInfoEmitter$.next(
-        `Solo puedes ${action} predicciones hasta una hora antes del partido.`
-        + ` El partido ${match.equipos.join(' - ')} comenzó hace ${elapsedMinutes} minutos.`
-      );
+      message += ` El partido ${match.equipos.join(' - ')} comenzó hace ${elapsedMinutes} minutos.`;
+
+      this.closedPredictionsInfoEmitter$.next(message);
     }
   }
 }
