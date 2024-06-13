@@ -56,8 +56,8 @@ const _upcomingMatches: readonly ApiRepresentation<typeof Match>[] = [
     equipos: ['Estados Unidos', 'Jamaica'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
-    datetime: new Date(new Date().setHours(18, 0, 0)),
-    prediccion: [2, 0] as [number, number]
+    datetime: new Date(new Date().setHours(1, 30, 0)),
+    // prediccion: [2, 0] as [number, number]
   },
   {
     id: 2,
