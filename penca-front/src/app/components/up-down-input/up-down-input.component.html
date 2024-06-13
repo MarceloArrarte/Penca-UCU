@@ -1,0 +1,5 @@
+<div class="d-flex justify-content-evenly align-items-center flex-wrap align-content-center h-100">
+    <button nbButton class="d-block p-2 w-25" status="danger" shape="round" (click)="decrement()" [disabled]="formControl.value == 0">-</button>
+    <p class="m-0 px-4">{{ formControl.value }}</p>
+    <button nbButton class="d-block p-2 w-25" status="success" shape="round" (click)="increment()">+</button>
+</div>

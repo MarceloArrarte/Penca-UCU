@@ -23,6 +23,7 @@ app-team-img {
     flex-basis: 40%;
     padding: 1.5rem;
     padding-bottom: .5rem;
+    width: 20%;
     
     &:first-child {
         padding-left: 0;
@@ -58,6 +59,7 @@ app-team-img {
         margin-right: auto;
         padding: .3rem 1rem;
         border-radius: 20px;
+        outline: 2px;
         border-width: 2px;
         font-weight: bold;
         font-size: 120%;
@@ -68,17 +70,17 @@ app-team-img {
         }
     
         &.prediccion-correcta {
-            border: solid #87b387;
+            outline: solid #87b387;
             color: #87b387;
         }
     
         &.prediccion-errada {
-            border: solid #f68b73;
+            outline: solid #f68b73;
             color: #f68b73;
         }
     
         &.prediccion-no-ingresada {
-            border: solid #acacac;
+            outline: solid #acacac;
             color: #b8b8b8;
         }
     }
