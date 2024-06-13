@@ -49,7 +49,7 @@ export class MakePredictionComponent {
       }),
       tap((matchData) => this.id = matchData.id),
       catchError((error) => {
-        console.error(error);
+        toastService.error(error);
         return of(undefined);
       })
     );
@@ -81,7 +81,7 @@ export class MakePredictionComponent {
         this.navUpcomingMatches();
       }
       else {
-        this.toastService.error('Error al enviar la predicción');
+        this.toastService.error('Error al enviar la predicción.');
       }
     })
   }

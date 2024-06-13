@@ -5,13 +5,28 @@
                 <div class="card-resultado">
                     <app-team-img [equipo]="match.equipos[0]"></app-team-img>
                     <div class="prediccion">
-                        <button *ngIf="match.prediccion; else btnIngresar" class="ingresada" nbButton status="primary" shape="round">
+                        <button
+                            *ngIf="match.prediccion; else btnIngresar"
+                            class="ingresada"
+                            nbButton
+                            status="primary"
+                            shape="round"
+                            [ngClass]="{ 'show-disabled': !match.newPredictionAllowed }"
+                            (click)="match.newPredictionAllowed ? navIngresarPrediccion(match.id) : mostrarInfoPrediccionesCerradas(match)"
+                        >
                             <span class="spacing-prediccion">{{ match.prediccion[0] }}-</span>
                             {{ match.prediccion[1] }}
                         </button>
 
                         <ng-template #btnIngresar>
-                            <button nbButton class="no-ingresada" status="primary" shape="round" (click)="navIngresarPrediccion(match.id)">
+                            <button
+                                class="no-ingresada"
+                                nbButton
+                                status="primary"
+                                shape="round"
+                                [ngClass]="{ 'show-disabled': !match.newPredictionAllowed }"
+                                (click)="match.newPredictionAllowed ? navIngresarPrediccion(match.id) : mostrarInfoPrediccionesCerradas(match)"
+                            >
                                 Ingresar
                             </button>
                         </ng-template>
@@ -20,7 +35,7 @@
                 </div>
             </nb-card-body>
             <nb-card-footer>
-                <p>{{ match.datetime | date: "dd/MM/yyyy hh:mm" }}</p>
+                <p>{{ match.datetime | date: "dd/MM/yyyy HH:mm" }}</p>
                 <p>{{ match.fase }} - Jornada {{ match.jornada }}</p>
             </nb-card-footer>
         </nb-card>

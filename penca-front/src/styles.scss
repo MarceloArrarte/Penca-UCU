@@ -25,4 +25,18 @@ button[nbButton] {
       background-color: #709670 !important;
     }
   }
+
+  &.show-disabled.status-primary.appearance-filled {
+    background-color: var(--button-filled-primary-disabled-background-color);
+    border-color: var(--button-filled-primary-disabled-border-color);
+    color: var(--button-filled-primary-disabled-text-color);
+
+    &:hover {
+      background-color: var(--button-filled-primary-disabled-background-color);
+    }
+
+    &:focus {
+      background-color: var(--button-filled-primary-disabled-background-color);
+    }
+  }
 }
