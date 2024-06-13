@@ -9,9 +9,9 @@ export class TeamImgComponent implements OnInit {
   @Input()
   equipo!: string;
 
-  @HostBinding('style.width')
-  @Input()
-  width?: string;
+  // @HostBinding('style.width')
+  // @Input()
+  // width?: string;
   
   ngOnInit(): void {
     if (this.equipo == undefined) {

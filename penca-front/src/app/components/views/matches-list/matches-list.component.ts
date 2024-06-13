@@ -20,14 +20,7 @@ export class MatchesListComponent {
     }
   ];
 
-  // @ViewChild(NbRouteTabsetComponent)
-  // tabset!: NbRouteTabsetComponent;
-
   constructor(mainTitleService: MainTitleService) {
     mainTitleService.title$.next('Partidos');
   }
-
-  // ngAfterViewInit(): void {
-  //   this.tabset.selectTab(this.tabset.tabs[0]);
-  // }
 }

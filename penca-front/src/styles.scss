@@ -6,3 +6,23 @@
   @include nb-theme-global();
 };
 /* You can add global styles to this file, and also import other style files */
+
+button[nbButton] {
+  border: none !important;
+
+  &[status="danger"] {
+    background-color: #f68b73 !important;
+  }
+
+  &[status="success"] {
+    background-color: #87b387 !important;
+    
+    &:hover {
+      background-color: #79a379 !important;
+    }
+  
+    &:focus {
+      background-color: #709670 !important;
+    }
+  }
+}

@@ -1,17 +1,20 @@
-export class PendingMatch {
-  equipos: [string, string];
+export class Match {
+  id: number;
+  equipos: MatchTeams;
   datetime: Date;
   fase: string;
   jornada: number;
-  prediccion?: [number, number];
+  prediccion?: MatchPrediction;
 
-  constructor({ equipos, datetime, fase, jornada, prediccion }: {
-    equipos: [string, string],
+  constructor({ id, equipos, datetime, fase, jornada, prediccion }: {
+    id: number,
+    equipos: MatchTeams,
     datetime: Date,
     fase: string,
     jornada: number,
-    prediccion?: [number, number]
+    prediccion?: MatchPrediction
   }) {
+    this.id = id;
     this.equipos = equipos;
     this.datetime = datetime;
     this.fase = fase;
@@ -20,19 +23,20 @@ export class PendingMatch {
   }
 }
 
-export class PlayedMatch extends PendingMatch {
-  resultado: [number, number];
+export class PlayedMatch extends Match {
+  resultado: MatchResult;
 
 
-  constructor({ equipos, datetime, fase, jornada, prediccion, resultado }: {
-    equipos: [string, string],
+  constructor({ id, equipos, datetime, fase, jornada, prediccion, resultado }: {
+    id: number,
+    equipos: MatchTeams,
     datetime: Date,
     fase: string,
     jornada: number,
-    prediccion?: [number, number],
-    resultado: [number, number]
+    prediccion?: MatchPrediction,
+    resultado: MatchResult
   }) {
-    super({ equipos, datetime, fase, jornada, prediccion });
+    super({ id, equipos, datetime, fase, jornada, prediccion });
     
     this.resultado = resultado;
   }
@@ -53,3 +57,9 @@ export class PlayedMatch extends PendingMatch {
       || (this.prediccion[1] > this.prediccion[0] && this.resultado[1] < this.resultado[0]));
   }
 }
+
+export type MatchTeams = [string, string];
+
+export type MatchPrediction = [number, number];
+
+export type MatchResult = MatchPrediction;

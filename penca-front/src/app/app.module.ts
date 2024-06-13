@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbTabsetModule, NbRouteTabsetModule, NbCardModule, NbListModule, NbSelectModule, NbButtonModule, NbInputModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbTabsetModule, NbRouteTabsetModule, NbCardModule,
+   NbListModule, NbSelectModule, NbButtonModule, NbInputModule, NbToastrModule,
+   NbUserModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { MatchesListComponent } from './components/views/matches-list/matches-list.component';
 import { UpcomingMatchesListComponent } from './components/views/matches-list/upcoming-matches-list/upcoming-matches-list.component';
@@ -13,6 +15,9 @@ import { TeamImgComponent } from './components/reutilizables/team-img/team-img.c
 import { LoginComponent } from './components/views/login/login.component';
 import { SignUpComponent } from './components/views/sign-up/sign-up.component';
 import { FormsModule } from '@angular/forms';
+import { MakePredictionComponent } from './components/views/make-prediction/make-prediction.component';
+import { UpDownInputComponent } from './components/up-down-input/up-down-input.component';
+import { DropdownFormComponent } from './components/reutilizables/dropdown-form/dropdown-form.component';
 
 const nebularModules = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -24,7 +29,9 @@ const nebularModules = [
   NbRouteTabsetModule,
   NbTabsetModule,
   NbListModule,
-  NbSelectModule
+  NbSelectModule,
+  NbUserModule,
+  NbToastrModule.forRoot()
 ];
 
 
@@ -37,7 +44,9 @@ const nebularModules = [
     TeamImgComponent,
     LoginComponent,
     SignUpComponent,
-    DropdownFormComponent
+    DropdownFormComponent,
+    MakePredictionComponent,
+    UpDownInputComponent
   ],
   imports: [
     BrowserModule,

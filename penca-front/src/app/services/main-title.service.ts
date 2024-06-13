@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -7,5 +8,7 @@ import { Subject } from 'rxjs';
 export class MainTitleService {
   title$ = new Subject<string>()
 
-  constructor() { }
+  constructor(htmlTitleService: Title) {
+    this.title$.subscribe((value) => htmlTitleService.setTitle(value))
+  }
 }
