@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Match, MatchPrediction, PlayedMatch } from '../classes/match';
+import { Match, MatchPrediction, MatchResult, PlayedMatch } from '../classes/match';
 import { Observable, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ApiRepresentation } from '../utils/types';
+import { isPast } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class MatchesService {
     );
   }
 
+  getPendingMatches(): Observable<Match[]> {
+    return of(_upcomingMatches.filter((m) => isPast(m.datetime))).pipe(
+      map((res) => res.map((obj) => new Match(obj)))
+    );
+  }
+
   getPlayedMatches(): Observable<PlayedMatch[]> {
     return of(_playedMatches).pipe(
       map((res) => res.map((obj) => new PlayedMatch(obj)))
@@ -23,7 +30,7 @@ export class MatchesService {
   }
 
   getMatch(id: number): Observable<Match> {
-    return of(_upcomingMatches.find((match) => match.id == id)).pipe(
+    return of([..._playedMatches, ..._upcomingMatches].find((match) => match.id == id)).pipe(
       switchMap((res) => {
         if (res) {
           return of(res);
@@ -32,7 +39,7 @@ export class MatchesService {
           return throwError(() => `Partido con ID ${id} no encontrado`);
         }
       }),
-      map((res) => new Match(res))
+      map((res) => (<PlayedMatch>res).resultado ? new PlayedMatch(<PlayedMatch>res) : new Match(res))
     );
   }
 
@@ -46,17 +53,36 @@ export class MatchesService {
     match.prediccion = prediction;
     return of(true);
   }
+
+  uploadResult(matchId: number, result: MatchResult): Observable<boolean> {
+    let matchIndex = _playedMatches.findIndex((match) => match.id == matchId);
+
+    if (matchIndex >= 0) {
+      _playedMatches[matchIndex].resultado = result;
+      return of(true);
+    }
+
+    matchIndex = _upcomingMatches.findIndex((match) => match.id == matchId);
+    if (matchIndex >= 0) {
+      const updated = new PlayedMatch({ ..._playedMatches[0], resultado: result });
+      _upcomingMatches.splice(matchIndex, 1);
+      _playedMatches.push(updated);
+      return of(true);
+    }
+
+    return of(false);
+  }
 }
 
 
 
-const _upcomingMatches: readonly ApiRepresentation<typeof Match>[] = [
+const _upcomingMatches: ApiRepresentation<typeof Match>[] = [
   {
     id: 1,
     equipos: ['Estados Unidos', 'Jamaica'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
-    datetime: new Date(new Date().setHours(1, 30, 0)),
+    datetime: new Date(new Date().setHours(30, 30, 0)),
     // prediccion: [2, 0] as [number, number]
   },
   {
@@ -64,11 +90,11 @@ const _upcomingMatches: readonly ApiRepresentation<typeof Match>[] = [
     equipos: ['Uruguay', 'Argentina'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
-    datetime: new Date(new Date().setHours(20, 30, 0))
+    datetime: new Date(new Date().setHours(0, 0, 0))
   }
 ];
 
-const _playedMatches: readonly ApiRepresentation<typeof PlayedMatch>[] = [
+const _playedMatches: ApiRepresentation<typeof PlayedMatch>[] = [
   // Sin predicción
   {
     id: 3,

@@ -74,6 +74,6 @@ export class PlayedMatch extends Match {
 
 export type MatchTeams = [string, string];
 
-export type MatchPrediction = [number, number];
+export type MatchPrediction = MatchResult;
 
-export type MatchResult = MatchPrediction;
+export type MatchResult = [number, number];
