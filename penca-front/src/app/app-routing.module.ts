@@ -7,10 +7,10 @@ import { LoginComponent } from './components/views/login/login.component';
 import { SignUpComponent } from './components/views/sign-up/sign-up.component';
 import { MakePredictionComponent } from './components/views/make-prediction/make-prediction.component';
 import { RoleGuard } from './guard/role.guard';
-import { UploadResultComponent } from './components/upload-result/upload-result.component';
-import { MatchesListAdminComponent } from './components/matches-list-admin/matches-list-admin.component';
-import { PlayedMatchesListAdminComponent } from './components/matches-list-admin/played-matches-list-admin/played-matches-list-admin.component';
-import { PendingMatchesListAdminComponent } from './components/matches-list-admin/pending-matches-list-admin/pending-matches-list-admin.component';
+import { UploadResultComponent } from './components/views/upload-result/upload-result.component';
+import { MatchesListAdminComponent } from './components/views/matches-list-admin/matches-list-admin.component';
+import { PlayedMatchesListAdminComponent } from './components/views/matches-list-admin/played-matches-list-admin/played-matches-list-admin.component';
+import { PendingMatchesListAdminComponent } from './components/views/matches-list-admin/pending-matches-list-admin/pending-matches-list-admin.component';
 
 const routes: Routes = [
   {
