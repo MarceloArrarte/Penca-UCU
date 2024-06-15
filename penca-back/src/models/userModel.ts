@@ -2,7 +2,7 @@ import db from '../config/database';
 import { RowDataPacket } from 'mysql2';
 
 interface User {
-  document: number;
+  document: string;
   name: string;
   email: string;
   password: string;
@@ -22,7 +22,7 @@ const getAllUsers = (): Promise<User[]> => {
 
 const getUserByEmail = (email: string): Promise<User> => {
   return new Promise((resolve, reject) => {
-    db.query('SELECT * FROM usuario WHERE email = ?', [email], (err, results) => {
+    db.query('SELECT documento, nombre, email, contraseña AS password FROM usuario WHERE email = ?', [email], (err, results) => {
       if (err) { return reject(err); }
 
       const users = results as RowDataPacket[];
@@ -34,7 +34,7 @@ const getUserByEmail = (email: string): Promise<User> => {
 
 const getUserByEmailOrDocument = (email: string, document: number): Promise<User> => {
   return new Promise((resolve, reject) => {
-    db.query('SELECT * FROM usuario WHERE email = ? OR documento = ?', [email, document], (err, results) => {
+    db.query('SELECT documento, nombre, email, contraseña AS password FROM usuario WHERE email = ? OR documento = ?', [email, document], (err, results) => {
       if (err) { return reject(err); }
 
       const users = results as RowDataPacket[];
@@ -44,7 +44,7 @@ const getUserByEmailOrDocument = (email: string, document: number): Promise<User
   });
 };
 
-const createUser = (document: number, name: string, email: string, hashedPassword: string,
+const createUser = (document: string, name: string, email: string, hashedPassword: string,
                     championId: number, runnerUpId: number): Promise<void> => {
   return new Promise((resolve, reject) => {
     db.beginTransaction(err => {
@@ -61,6 +61,12 @@ const createUser = (document: number, name: string, email: string, hashedPasswor
           if (err) { return db.rollback(() => { return reject(err); }); }
 
           resolve()
+        });
+
+        db.commit(err => {
+          if (err) { return db.rollback(() => { reject(err); }); }
+
+          resolve();
         });
       });
     });
