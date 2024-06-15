@@ -58,7 +58,7 @@ export class MakePredictionComponent {
       rxjsUtils.notNullish<Match>(),
       map((matchData) => fb.group({
           prediction1: new FormControl<number>(matchData.prediccion?.[0] ?? 0, { nonNullable: true }),
-          prediction2: new FormControl<number>(matchData.prediccion?.[0] ?? 0, { nonNullable: true })
+          prediction2: new FormControl<number>(matchData.prediccion?.[1] ?? 0, { nonNullable: true })
         })
       ),
       tap((formGroup) => {

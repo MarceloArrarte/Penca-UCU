@@ -18,6 +18,10 @@ import { FormsModule } from '@angular/forms';
 import { MakePredictionComponent } from './components/views/make-prediction/make-prediction.component';
 import { UpDownInputComponent } from './components/up-down-input/up-down-input.component';
 import { DropdownFormComponent } from './components/reutilizables/dropdown-form/dropdown-form.component';
+import { UploadResultComponent } from './components/upload-result/upload-result.component';
+import { MatchesListAdminComponent } from './components/matches-list-admin/matches-list-admin.component';
+import { PendingMatchesListAdminComponent } from './components/matches-list-admin/pending-matches-list-admin/pending-matches-list-admin.component';
+import { PlayedMatchesListAdminComponent } from './components/matches-list-admin/played-matches-list-admin/played-matches-list-admin.component';
 
 const nebularModules = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -46,7 +50,12 @@ const nebularModules = [
     SignUpComponent,
     DropdownFormComponent,
     MakePredictionComponent,
-    UpDownInputComponent
+    UpDownInputComponent,
+    UploadResultComponent,
+    MatchesListAdminComponent,
+    PendingMatchesListAdminComponent,
+    PendingMatchesListAdminComponent,
+    PlayedMatchesListAdminComponent
   ],
   imports: [
     BrowserModule,
