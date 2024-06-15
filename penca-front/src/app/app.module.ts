@@ -22,6 +22,9 @@ import { UploadResultComponent } from './components/views/upload-result/upload-r
 import { MatchesListAdminComponent } from './components/views/matches-list-admin/matches-list-admin.component';
 import { PendingMatchesListAdminComponent } from './components/views/matches-list-admin/pending-matches-list-admin/pending-matches-list-admin.component';
 import { PlayedMatchesListAdminComponent } from './components/views/matches-list-admin/played-matches-list-admin/played-matches-list-admin.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
+import { AuthTokenInterceptor } from './interceptors/auth-token.interceptor';
 
 const nebularModules = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -64,7 +67,18 @@ const nebularModules = [
     BrowserAnimationsModule,
     ...nebularModules
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
