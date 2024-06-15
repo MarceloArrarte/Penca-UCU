@@ -1,9 +1,9 @@
-<nb-select placeholder="Select User" [(ngModel)]="selectedUser" (ngModelChange)="onUserChange($event)" name="selectedUser" style="width: 100%;">
-  <nb-option *ngFor="let user of users" [value]="user">{{ user.name }}</nb-option>
+<nb-select placeholder="Select User" [(ngModel)]="selectedTeam" (ngModelChange)="onUserChange($event)" name="selectedTeam" style="width: 100%;">
+  <nb-option *ngFor="let team of teams" [value]="team">{{ team.name }}</nb-option>
 </nb-select>
 
-<nb-list *ngIf="selectedUser" style="max-height: 200px; overflow-y: auto;">
+<nb-list *ngIf="selectedTeam" style="max-height: 200px; overflow-y: auto;">
   <nb-list-item>
-    <nb-user [name]="selectedUser.name" [picture]="'assets/equipos/' + selectedUser.picture"></nb-user>
+    <nb-user [name]="selectedTeam.name" [picture]="'assets/equipos/' + selectedTeam.picture"></nb-user>
   </nb-list-item>
 </nb-list>

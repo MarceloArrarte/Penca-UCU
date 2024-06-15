@@ -6,7 +6,8 @@ import { IEquipo } from 'src/app/classes/equipo.model';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
+  providers: [TeamSelectorService]
 })
 export class SignUpComponent implements OnInit {
   nombre: string = '';

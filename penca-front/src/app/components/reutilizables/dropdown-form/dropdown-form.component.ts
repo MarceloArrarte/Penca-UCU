@@ -8,11 +8,11 @@ import { IEquipo } from 'src/app/classes/equipo.model';
   styleUrls: ['./dropdown-form.component.scss']
 })
 export class DropdownFormComponent{
-  @Input() users: IEquipo[] = [];
-  @Input() selectedUser: IEquipo | null = null;
-  @Output() selectedUserChange = new EventEmitter<IEquipo>();
+  @Input() teams: IEquipo[] = [];
+  @Input() selectedTeam: IEquipo | null = null;
+  @Output() selectedTeamChange = new EventEmitter<IEquipo>();
 
   onUserChange(user: any) {
-    this.selectedUserChange.emit(user);
+    this.selectedTeamChange.emit(user);
   }
 }

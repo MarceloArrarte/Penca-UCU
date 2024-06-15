@@ -19,12 +19,12 @@
             name="contrasena" />
 
           <label for="campeon">Campeon</label>
-          <app-dropdown-form [users]="filteredUsersForCampeon" [(selectedUser)]="selectedCampeon"
-            (selectedUserChange)="onCampeonChange($event)"></app-dropdown-form>
+          <app-dropdown-form [teams]="filteredUsersForCampeon" [(selectedTeam)]="selectedCampeon"
+            (selectedTeamChange)="onCampeonChange($event)"></app-dropdown-form>
 
           <label for="sub-campeon">Sub campeon</label>
-          <app-dropdown-form [users]="filteredUsersForSubCampeon" [(selectedUser)]="selectedSubCampeon"
-            (selectedUserChange)="onSubCampeonChange($event)"></app-dropdown-form>
+          <app-dropdown-form [teams]="filteredUsersForSubCampeon" [(selectedTeam)]="selectedSubCampeon"
+            (selectedTeamChange)="onSubCampeonChange($event)"></app-dropdown-form>
 
           <button nbButton fullWidth status="primary">Registrarme</button>
         </form>
