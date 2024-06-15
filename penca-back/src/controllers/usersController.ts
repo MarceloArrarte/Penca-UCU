@@ -41,7 +41,7 @@ const loginUser = async (req: Request, res: Response) => {
 
   try {
     const user = await getUserByEmail(email);
-
+  
     if (!user) { return res.status(401).json({ error: 'Invalid email or password' }); }
 
     const isPasswordValid = await bcrypt.compare(password, user.password)
@@ -54,7 +54,7 @@ const loginUser = async (req: Request, res: Response) => {
       { expiresIn: '3h' }  
     )
   
-    return res.json({ token: token });
+    return res.status(200).json({ token: token });
   } catch (err) {
     return res.status(500).json({ error: 'Database Error' });
   }
