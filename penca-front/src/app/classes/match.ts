@@ -1,3 +1,5 @@
+import { differenceInHours, differenceInMinutes } from "date-fns";
+
 export class Match {
   id: number;
   equipos: MatchTeams;
@@ -21,6 +23,18 @@ export class Match {
     this.jornada = jornada;
     this.prediccion = prediccion;
   }
+
+  get newPredictionAllowed(): boolean {
+    return this.remainingMinutesToStart >= 60;
+  }
+
+  get remainingMinutesToStart(): number {
+    return differenceInMinutes(this.datetime, new Date(), { roundingMethod: 'floor' });
+  }
+
+  get elapsedMinutes(): number {
+    return -differenceInMinutes(this.datetime, new Date(), { roundingMethod: 'ceil' });
+  }
 }
 
 export class PlayedMatch extends Match {
@@ -41,18 +55,18 @@ export class PlayedMatch extends Match {
     this.resultado = resultado;
   }
 
-  get isExactPrediction() {
-    return this.prediccion && (this.prediccion[0] == this.resultado[0] && this.prediccion[1] == this.resultado[1]);
+  isExactPrediction(): this is PlayedMatch & { prediccion: MatchPrediction } {
+    return !!this.prediccion && (this.prediccion[0] == this.resultado[0] && this.prediccion[1] == this.resultado[1]);
   }
 
-  get isCorrectPrediction() {
-    return this.prediccion && !this.isExactPrediction
+  isCorrectPrediction(): this is PlayedMatch & { prediccion: MatchPrediction }  {
+    return !!this.prediccion && !this.isExactPrediction()
       && ((this.prediccion[0] > this.prediccion[1] && this.resultado[0] > this.resultado[1])
       || (this.prediccion[1] > this.prediccion[0] && this.resultado[1] > this.resultado[0]));
   }
 
-  get isWrongPrediction() {
-    return this.prediccion
+  isWrongPrediction(): this is PlayedMatch & { prediccion: MatchPrediction }  {
+    return !!this.prediccion
       && ((this.prediccion[0] > this.prediccion[1] && this.resultado[0] < this.resultado[1])
       || (this.prediccion[1] > this.prediccion[0] && this.resultado[1] < this.resultado[0]));
   }

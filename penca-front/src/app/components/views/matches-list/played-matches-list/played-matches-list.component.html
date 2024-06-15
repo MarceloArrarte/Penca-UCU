@@ -14,9 +14,9 @@
                             *ngIf="match.prediccion; else sinPrediccion"
                             class="goles-prediccion"
                             [ngClass]="{
-                                'prediccion-exacta': match.isExactPrediction,
-                                'prediccion-correcta': match.isCorrectPrediction,
-                                'prediccion-errada': match.isWrongPrediction
+                                'prediccion-exacta': match.isExactPrediction(),
+                                'prediccion-correcta': match.isCorrectPrediction(),
+                                'prediccion-errada': match.isWrongPrediction()
                             }"
                         >
                             <span class="spacing-prediccion">{{ match.prediccion[0] }} - </span>
@@ -33,17 +33,17 @@
                 </div>
             </nb-card-body>
             
-            <nb-card-footer *ngIf="match.isExactPrediction" class="suma-puntos">
+            <nb-card-footer *ngIf="match.isExactPrediction()" class="suma-puntos">
                 <p>Resultado exacto</p>
                 <p>+4 puntos</p>
             </nb-card-footer>
 
-            <nb-card-footer *ngIf="match.isCorrectPrediction" class="suma-puntos">
+            <nb-card-footer *ngIf="match.isCorrectPrediction()" class="suma-puntos">
                 <p>Resultado correcto</p>
                 <p>+2 puntos</p>
             </nb-card-footer>
 
-            <nb-card-footer *ngIf="match.isWrongPrediction" class="no-suma-puntos">
+            <nb-card-footer *ngIf="match.isWrongPrediction()" class="no-suma-puntos">
                 <p>No acertaste</p>
                 <p>Sin puntos</p>
             </nb-card-footer>
