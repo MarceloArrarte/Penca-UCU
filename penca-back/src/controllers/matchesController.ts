@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getMatchesAndPredictions } from '../models/matchModel';
+import { getMatchesAndPredictions, getAllMatches } from '../models/matchModel';
 
 const getMatchesAndUserPredictions = async (req: Request, res: Response) => {
   try {
@@ -8,10 +8,20 @@ const getMatchesAndUserPredictions = async (req: Request, res: Response) => {
 
     const matchs = await getMatchesAndPredictions(userDocument, played);
 
-    res.json(matchs);
+    res.status(200).json(matchs);
   } catch (err) {
     res.status(500).json({ error: 'Database Error' });
   }
 };
 
-export { getMatchesAndUserPredictions };
+const getMatches = async (req: Request, res: Response) => {
+  try {
+    const matchs = await getAllMatches();
+
+    res.status(200).json(matchs);
+  } catch (err) {
+    res.status(500).json({ error: 'Database Error' });
+  }
+};
+
+export { getMatchesAndUserPredictions, getMatches };
