@@ -24,36 +24,36 @@ const predictTeamsGoalsForMatch = (userDocument: number, matchId: number, predic
         predictions: []
       }
 
-      predictions.forEach(prediction => { 
-        db.query('INSERT INTO predice (id_equipo, id_partido, documento_alumno, goles) values (?, ?, ?, ?)',
-        [prediction.teamId, matchId, userDocument, prediction.goalsPredict], (err, results) => {
-          console.log(err)
-          if (err) { return db.rollback(() => { return reject(err); }); }
+      const predictionPromises = predictions.map(prediction => {
+        return new Promise<void>((resolve, reject) => {
+          db.query(`
+            INSERT INTO predice (id_equipo, id_partido, documento_alumno, goles)
+            VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE goles = VALUES(goles)
+          `, [prediction.teamId, matchId, userDocument, prediction.goalsPredict], (err, _results) => {
+            if (err) { return db.rollback(() => { reject(err); }); }
 
-          matchPrediction.predictions.push(
-            {
-              teamId: prediction.teamId,
-              goalsPredict: prediction.goalsPredict
-            }
-          );
-        })
-      })
+            matchPrediction.predictions.push(
+              {
+                teamId: prediction.teamId,
+                goalsPredict: prediction.goalsPredict
+              }
+            );
 
-      db.commit(err => {
-        if (err) { return db.rollback(() => { reject(err); }); }
+            resolve();
+          });
+        });
+      });
 
-        resolve(matchPrediction);
+      Promise.all(predictionPromises).then(() => {
+        db.commit(err => {
+          if (err) { return db.rollback(() => { reject(err); }); }
+
+          resolve(matchPrediction);
+        });
+      }).catch(err => {
+        db.rollback(() => { reject(err); });
       });
     })
-
-    // db.query('SELECT * FROM predice where documento_alumno = ? AND id_partido = ?',
-    // [userDocument, matchId], (err, results) => {
-    //   if (err) { return reject(err); }
-
-    //   const rows = results as RowDataPacket[];
-
-    //   const matchPredictionMap: { [key: number]: MatchPrediction } = {};
-  
   })
 }
 
