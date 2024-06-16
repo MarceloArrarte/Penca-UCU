@@ -15,6 +15,59 @@ interface Match {
   teams: Teams[]
 }
 
+interface TeamResult {
+  idTeam: number | null,
+  country: string | null;
+  goals: number | null; 
+}
+
+interface MatchAndResult {
+  id: number;
+  date: string;
+  phase: string;
+  teams: TeamResult[];
+} 
+
+const getAllMatches = (): Promise<MatchAndResult[]> => {
+  return new Promise((resolve, reject) => {
+    db.query(`
+      SELECT p.id, p.fecha_hora, p.nombre_fase, e.id AS id_equipo, e.pais, j.goles FROM partido p
+      INNER JOIN juega j on j.id_partido = p.id
+      INNER JOIN equipo e on e.id = j.id_equipo
+      ORDER BY p.fecha_hora ASC;`, (err, results) => {
+      if (err) { return reject(err); }
+
+      const rows = results as RowDataPacket[];
+      const matchesMap: { [key: number]: MatchAndResult } = {};
+      
+      rows.forEach(row => {
+        const matchId = row.id;
+
+        if (!matchesMap[matchId]) {
+          matchesMap[matchId] = {
+            id: matchId,
+            date: row.fecha_hora,
+            phase: row.nombre_fase,
+            teams: []
+          };
+        }
+
+        matchesMap[matchId].teams.push(
+          {
+            idTeam: row.id_partido,
+            country: row.pais,
+            goals: row.goles
+          } 
+        )
+      })
+
+      const matches: MatchAndResult[] = Object.values(matchesMap);
+
+      resolve(matches as MatchAndResult[]);
+    });
+  });
+}
+
 const getMatchesAndPredictions = (userDocument: number, played: string): Promise<Match[]> => {
   return new Promise((resolve, reject) => {
     let playedFilter = ''
@@ -68,4 +121,4 @@ const getMatchesAndPredictions = (userDocument: number, played: string): Promise
   });
 };
 
-export { getMatchesAndPredictions };
+export { getMatchesAndPredictions, getAllMatches };
