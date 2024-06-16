@@ -1,4 +1,3 @@
-// src/app/services/user.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IEquipo } from '../classes/equipo.model';
@@ -31,13 +30,13 @@ export class TeamSelectorService {
     this.selectedSubCampeonSubject.next(equipo);
   }
 
-  filterUsers() {
+  filterTeams() {
     const selectedCampeon = this.selectedCampeonSubject.value;
     const selectedSubCampeon = this.selectedSubCampeonSubject.value;
 
-    const filteredUsersForCampeon = this.equipos.filter(equipo => equipo !== selectedSubCampeon);
-    const filteredUsersForSubCampeon = this.equipos.filter(equipo => equipo !== selectedCampeon);
+    const filteredTeamsForCampeon = this.equipos.filter(equipo => equipo !== selectedSubCampeon);
+    const filteredTeamsForSubCampeon = this.equipos.filter(equipo => equipo !== selectedCampeon);
 
-    return { filteredUsersForCampeon, filteredUsersForSubCampeon };
+    return { filteredTeamsForCampeon, filteredTeamsForSubCampeon };
   }
 }
