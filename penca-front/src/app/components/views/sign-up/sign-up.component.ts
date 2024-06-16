@@ -17,25 +17,25 @@ export class SignUpComponent implements OnInit {
   selectedCampeon: IEquipo | null = null;
   selectedSubCampeon: IEquipo | null = null;
 
-  users: IEquipo[] = [];
-  filteredUsersForCampeon: IEquipo[] = [];
-  filteredUsersForSubCampeon: IEquipo[] = [];
+  teams: IEquipo[] = [];
+  filteredTeamsForCampeon: IEquipo[] = [];
+  filteredTeamsForSubCampeon: IEquipo[] = [];
 
   constructor(private teamSelectorService: TeamSelectorService) {}
 
   ngOnInit() {
-    this.users = this.teamSelectorService.getTeams();
-    this.filteredUsersForCampeon = [...this.users];
-    this.filteredUsersForSubCampeon = [...this.users];
+    this.teams = this.teamSelectorService.getTeams();
+    this.filteredTeamsForCampeon = [...this.teams];
+    this.filteredTeamsForSubCampeon = [...this.teams];
 
     this.teamSelectorService.selectedCampeon$.subscribe(selectedUser => {
       this.selectedCampeon = selectedUser;
-      this.updateFilteredUsers();
+      this.updateFilteredTeams();
     });
 
     this.teamSelectorService.selectedSubCampeon$.subscribe(selectedUser => {
       this.selectedSubCampeon = selectedUser;
-      this.updateFilteredUsers();
+      this.updateFilteredTeams();
     });
   }
 
@@ -47,9 +47,9 @@ export class SignUpComponent implements OnInit {
     this.teamSelectorService.selectSubCampeon(selectedUser);
   }
 
-  updateFilteredUsers() {
-    const { filteredUsersForCampeon, filteredUsersForSubCampeon } = this.teamSelectorService.filterUsers();
-    this.filteredUsersForCampeon = filteredUsersForCampeon;
-    this.filteredUsersForSubCampeon = filteredUsersForSubCampeon;
+  updateFilteredTeams() {
+    const { filteredTeamsForCampeon, filteredTeamsForSubCampeon } = this.teamSelectorService.filterTeams();
+    this.filteredTeamsForCampeon = filteredTeamsForCampeon;
+    this.filteredTeamsForSubCampeon = filteredTeamsForSubCampeon;
   }
 }
