@@ -75,6 +75,11 @@ const routes: Routes = [
   },
   },
   {
+    path: 'ranking',
+    component: PlayerRankingComponent,
+    title: 'Ranking',
+  },
+  {
     path: '**',
     redirectTo: 'matches/upcoming'
   }
