@@ -73,6 +73,11 @@ const routes: Routes = [
     title: 'Registro',
   },
   {
+    path: 'ranking',
+    component: PlayerRankingComponent,
+    title: 'Ranking',
+  },
+  {
     path: '**',
     redirectTo: 'matches/upcoming'
   }

@@ -25,6 +25,8 @@ import { PlayedMatchesListAdminComponent } from './components/views/matches-list
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 import { AuthTokenInterceptor } from './interceptors/auth-token.interceptor';
+import { PlayerRankingComponent } from './components/views/player-ranking/player-ranking.component';
+import { BottomNavComponent } from './components/views/bottom-nav/bottom-nav.component';
 
 const nebularModules = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -59,6 +61,9 @@ const nebularModules = [
     PendingMatchesListAdminComponent,
     PendingMatchesListAdminComponent,
     PlayedMatchesListAdminComponent
+    PlayedMatchesListAdminComponent,
+    PlayerRankingComponent,
+    BottomNavComponent
   ],
   imports: [
     BrowserModule,
