@@ -73,7 +73,6 @@ const routes: Routes = [
     component: SignUpComponent,
     title: 'Registro',
   },
-  },
   {
     path: 'ranking',
     component: PlayerRankingComponent,

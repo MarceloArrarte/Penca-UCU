@@ -62,8 +62,6 @@ const nebularModules = [
     PendingMatchesListAdminComponent,
     PendingMatchesListAdminComponent,
     PlayedMatchesListAdminComponent,
-    PlayerRankingComponent,
-    BottomNavComponent
     PlayedMatchesListAdminComponent,
     PlayerRankingComponent,
     BottomNavComponent
