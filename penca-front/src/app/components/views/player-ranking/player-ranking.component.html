@@ -1,0 +1,15 @@
+<div class="player-list-container">
+    <nb-card>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item *ngFor="let player of players" [class.highlight]="player.rank === 6">
+            <span class="rank">{{ player.rank }} -</span>
+            <div class="player-info">
+              <div class="player-name">{{ player.name }}</div>
+            </div>
+            <div class="score">{{ player.totalScore }} pts</div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>

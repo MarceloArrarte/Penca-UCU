@@ -11,6 +11,7 @@ import { UploadResultComponent } from './components/views/upload-result/upload-r
 import { MatchesListAdminComponent } from './components/views/matches-list-admin/matches-list-admin.component';
 import { PlayedMatchesListAdminComponent } from './components/views/matches-list-admin/played-matches-list-admin/played-matches-list-admin.component';
 import { PendingMatchesListAdminComponent } from './components/views/matches-list-admin/pending-matches-list-admin/pending-matches-list-admin.component';
+import { PlayerRankingComponent } from './components/views/player-ranking/player-ranking.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,7 @@ const routes: Routes = [
     path: 'sign-up',
     component: SignUpComponent,
     title: 'Registro',
+  },
   },
   {
     path: '**',
