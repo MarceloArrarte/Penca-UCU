@@ -64,7 +64,7 @@ export class MatchesService {
 
     matchIndex = _upcomingMatches.findIndex((match) => match.id == matchId);
     if (matchIndex >= 0) {
-      const updated = new PlayedMatch({ ..._playedMatches[0], resultado: result });
+      const updated = new PlayedMatch({ ..._upcomingMatches[matchIndex], resultado: result });
       _upcomingMatches.splice(matchIndex, 1);
       _playedMatches.push(updated);
       return of(true);
@@ -87,7 +87,7 @@ const _upcomingMatches: ApiRepresentation<typeof Match>[] = [
   },
   {
     id: 2,
-    equipos: ['Uruguay', 'Argentina'] as [string, string],
+    equipos: ['Uruguay', 'Ecuador'] as [string, string],
     jornada: 1,
     fase: 'Fase de grupos',
     datetime: new Date(new Date().setHours(0, 0, 0))

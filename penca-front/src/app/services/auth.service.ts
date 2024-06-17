@@ -8,6 +8,10 @@ export class AuthService {
 
   constructor(private router: Router) { }
 
+  navigateToLogin(): void {
+    this.router.navigateByUrl('/login');
+  }
+
   getToken(): string {
     return localStorage.getItem('token') || '';
   }
@@ -34,6 +38,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.navigateToLogin();
   }
 }
