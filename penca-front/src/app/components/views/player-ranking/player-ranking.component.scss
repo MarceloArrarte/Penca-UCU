@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.player-list-container {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 2rem 0;
+}
+
+nb-card {
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  background-color: #1e1e2f;
+  color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  nb-card-body {
+    nb-list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 0;
+      border-bottom: 1px solid #444;
+      font-size: 1.3rem;
+
+
+      .name {
+        color: green;
+        margin-right: 1rem;
+      }
+      .rank {
+        margin-right: 1rem;
+      }
+
+      .score {
+        color: #ffffff;
+        text-align: right;
+      }
+    }
+
+    nb-list-item:last-child {
+      border-bottom: none;
+    }
+  }
+}

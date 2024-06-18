@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule, NbTabsetModule, NbRouteTabsetModule, NbCardModule,
    NbListModule, NbSelectModule, NbButtonModule, NbInputModule, NbToastrModule,
-   NbUserModule } from '@nebular/theme';
+   NbUserModule, NbActionsModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { MatchesListComponent } from './components/views/matches-list/matches-list.component';
 import { UpcomingMatchesListComponent } from './components/views/matches-list/upcoming-matches-list/upcoming-matches-list.component';
@@ -25,9 +25,12 @@ import { PlayedMatchesListAdminComponent } from './components/views/matches-list
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 import { AuthTokenInterceptor } from './interceptors/auth-token.interceptor';
+import { PlayerRankingComponent } from './components/views/player-ranking/player-ranking.component';
+import { BottomNavComponent } from './components/views/bottom-nav/bottom-nav.component';
 
 const nebularModules = [
   NbThemeModule.forRoot({ name: 'dark' }),
+  NbActionsModule,
   NbButtonModule,
   NbCardModule,
   NbEvaIconsModule,
@@ -58,7 +61,10 @@ const nebularModules = [
     MatchesListAdminComponent,
     PendingMatchesListAdminComponent,
     PendingMatchesListAdminComponent,
-    PlayedMatchesListAdminComponent
+    PlayedMatchesListAdminComponent,
+    PlayedMatchesListAdminComponent,
+    PlayerRankingComponent,
+    BottomNavComponent
   ],
   imports: [
     BrowserModule,
