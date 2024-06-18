@@ -25,7 +25,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
     responses$ = responses$.pipe(
       tap((response) => {
-        let errorMessage: string | null | undefined = (response.body as any)?.error?.description
+        let errorMessage: string | null | undefined = (response.body as any)?.error
         if (errorMessage) {
           this.toastService.error(errorMessage);
         }

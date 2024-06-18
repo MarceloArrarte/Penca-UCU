@@ -1,12 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, map, switchMap, tap } from 'rxjs';
+import { ConfigService } from './config.service';
+import { ApiError, ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends ApiService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, http: HttpClient, config: ConfigService) {
+    super(http, config);
+  }
 
   navigateToLogin(): void {
     this.router.navigateByUrl('/login');
@@ -31,9 +37,22 @@ export class AuthService {
     return !!token;
   }
 
-  login(token: string): void {
-    localStorage.setItem('token', token);
-    this.router.navigate(['/matches']);
+  login({ email, password }: { email: string, password: string }): Observable<boolean> {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => this.http.post<{ token: string } | ApiError>(`${apiUrl}/login`, { email, password })),
+      map((response) => {
+        if ('token' in response) {
+          localStorage.setItem('token', response.token);
+          return true;
+        }
+        return false;
+      }),
+      tap((result) => {
+        if (result) {
+          this.router.navigateByUrl('/matches')
+        }
+      })
+    );
   }
 
   logout(): void {
