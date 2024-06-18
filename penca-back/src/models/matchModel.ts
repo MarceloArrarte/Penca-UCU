@@ -26,6 +26,11 @@ interface MatchAndResult {
   date: string;
   phase: string;
   teams: TeamResult[];
+}
+
+interface MatchTeams {
+  matchId: number;
+  teamIds: number[];
 } 
 
 const getAllMatches = (): Promise<MatchAndResult[]> => {
@@ -121,4 +126,67 @@ const getMatchesAndPredictions = (userDocument: number, played: string): Promise
   });
 };
 
-export { getMatchesAndPredictions, getAllMatches };
+const updateMatchTeams = (matchId: number, teamIds: number[]): Promise<MatchTeams> => {
+  return new Promise((resolve, reject) => {
+    db.beginTransaction(err => {
+      if (err) { return reject(err); }
+      
+      const matchTeams : MatchTeams = {
+        matchId: matchId,
+        teamIds: []
+      }
+
+      db.query('SELECT * FROM partido WHERE id = ?', [matchId], (err, results) => {
+        if (err) { return db.rollback(() => { reject(err); }); }
+
+        const match = results as RowDataPacket[];
+
+        if (!match[0]) {
+          db.rollback(() => {
+            reject('Match does not exists')
+          });
+        }
+      });
+
+      db.query('DELETE FROM juega WHERE id_partido = ?', [matchId], (err, _results) => {
+        if (err) { return db.rollback(() => { reject(err); }); }
+
+        const teamsPromises = teamIds.map(teamId => {
+          return new Promise<void>((resolve, reject) => {
+            db.query('SELECT * FROM equipo WHERE id = ?', [teamId], (err, results) => {
+              if (err) { return db.rollback(() => { reject(err); }); }
+
+              const team = results as RowDataPacket[];
+
+              if (!team[0]) {
+                db.rollback(() => {
+                  reject(`Team(${teamId}) does not exists`)
+                });
+              }
+            });
+
+            db.query(`INSERT INTO juega (id_partido, id_equipo) VALUES (?, ?)`,
+            [matchId, teamId], (err, _results) => {
+              if (err) { return db.rollback(() => { reject(err); }); }
+
+              matchTeams.teamIds.push(teamId);
+
+              resolve();
+            });
+          });
+        });
+
+        Promise.all(teamsPromises).then(() => {
+          db.commit(err => {
+            if (err) { return db.rollback(() => { reject(err); }); }
+
+            resolve(matchTeams);
+          }); }).catch(err => {
+            db.rollback(() => { reject(err); });
+          });
+      });
+    });
+  });
+}
+
+export { getMatchesAndPredictions, getAllMatches, updateMatchTeams};
