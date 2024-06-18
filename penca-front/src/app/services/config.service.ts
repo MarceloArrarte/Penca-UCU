@@ -17,7 +17,7 @@ export class ConfigService {
   public appConfig$ = this._appConfig$.asObservable();
 
   private defaults: AppConfig = {
-    apiUrl: 'localhost:8000/api'
+    apiUrl: 'http://localhost:8000/api'
   };
 
   constructor(http: HttpClient) {

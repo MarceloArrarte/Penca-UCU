@@ -6,10 +6,10 @@
     "configurations": [
         {
             "address": "localhost",
-            // "localRoot": "${workspaceFolder}/penca-back/src",
+            "localRoot": "${workspaceFolder}/penca-back/src",
             "name": "Degub Remote API",
             "port": 9229,
-            "remoteRoot": "/app",
+            "remoteRoot": "/app/src",
             "request": "attach",
             "skipFiles": [
                 "<node_internals>/**"

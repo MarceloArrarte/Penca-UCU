@@ -49,7 +49,7 @@ const loginUser = async (req: Request, res: Response) => {
     if (!isPasswordValid) { return res.status(401).json({ error: 'Invalid email or password' }); }
     
     const token = jwt.sign(
-      { document: user.document, email: user.email },
+      { document: user.document, email: user.email, role: user.role },
       secretKey,
       { expiresIn: '3h' }  
     )
