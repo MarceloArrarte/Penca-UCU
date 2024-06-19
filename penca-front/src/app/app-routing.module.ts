@@ -34,7 +34,19 @@ const routes: Routes = [
         path: 'played',
         component: PlayedMatchesListComponent
       },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'upcoming'
+      }
     ]
+  },
+  {
+    path: 'ranking',
+    component: PlayerRankingComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'alumno' },
+    title: 'Ranking',
   },
   {
     path: 'admin/matches/:id/result',
@@ -72,11 +84,6 @@ const routes: Routes = [
     path: 'sign-up',
     component: SignUpComponent,
     title: 'Registro',
-  },
-  {
-    path: 'ranking',
-    component: PlayerRankingComponent,
-    title: 'Ranking',
   },
   {
     path: '**',

@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoutes';
 import cors from 'cors'
 import matchRoutes from './routes/matchRoutes';
 import predictRoutes from './routes/predictionRoutes';
+import teamRoutes from './routes/teamRoutes';
 import morgan from 'morgan';
 
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/api', userRoutes);
 app.use('/api', matchRoutes);
 app.use('/api', predictRoutes);
+app.use('/api', teamRoutes);
 
 app.use((req, res, next) => {
   return res.status(404).json({ error: 'Not found' });
