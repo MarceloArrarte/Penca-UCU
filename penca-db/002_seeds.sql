@@ -63,6 +63,22 @@ INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-01 22:00:00', 'Fa
 INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-02 22:00:00', 'Fase de grupos - Jornada 3');
 INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-02 22:00:00', 'Fase de grupos - Jornada 3');
 
+-- Cuartos de final --
+INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-04 22:00:00', 'Cuartos de final');
+INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-05 22:00:00', 'Cuartos de final');
+INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-06 19:00:00', 'Cuartos de final');
+INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-06 22:00:00', 'Cuartos de final');
+
+-- Semifinal --
+INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-09 21:00:00', 'Semifinal');
+INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-10 21:00:00', 'Semifinal');
+
+-- Tercer lugar --
+INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-13 21:00:00', 'Tercer lugar');
+
+-- Final --
+INSERT INTO partido (fecha_hora, nombre_fase) VALUES ('2024-07-14 21:00:00', 'Final');
+
 -- Enfrentamientos --
 
 -- Partido 1: Argentina vs Canadá
