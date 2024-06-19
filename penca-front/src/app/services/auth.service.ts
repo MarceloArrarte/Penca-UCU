@@ -11,7 +11,7 @@ import { AuthHelperService } from './auth-helper.service';
 })
 export class AuthService extends ApiService {
 
-  constructor(private router: Router, http: HttpClient, config: ConfigService, private authHelper: AuthHelperService) {
+  constructor(http: HttpClient, config: ConfigService, private authHelper: AuthHelperService) {
     super(http, config);
   }
 
