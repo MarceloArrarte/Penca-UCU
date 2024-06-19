@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MainTitleService } from './services/main-title.service';
 import { Observable } from 'rxjs';
 import { AuthService } from './services/auth.service';
+import { AuthHelperService } from './services/auth-helper.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,11 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   h1Title$: Observable<string>;
 
-  constructor(mainTitleService: MainTitleService, private authService: AuthService) {
+  constructor(mainTitleService: MainTitleService, private authHelper: AuthHelperService) {
     this.h1Title$ = mainTitleService.title$.asObservable();
   }
 
-  get isAutenticated(){
-    return this.authService.isAuthenticated();
+  get isAuthenticated(){
+    return this.authHelper.isAuthenticated();
   }
-
 }

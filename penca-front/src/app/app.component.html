@@ -1,4 +1,4 @@
-<nb-layout *ngIf="isAutenticated; else layoutPublic">
+<nb-layout *ngIf="isAuthenticated; else public">
   <nb-layout-header fixed>
     <h1>{{ h1Title$ | async }}</h1>
   </nb-layout-header>
@@ -13,6 +13,12 @@
   <nb-layout-footer fixed></nb-layout-footer>
 </nb-layout>
 
-<ng-template #layoutPublic>
-  <router-outlet></router-outlet>
+<ng-template #public>
+  <nb-layout>
+    <nb-layout-column>
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </nb-layout-column>
+  </nb-layout>
 </ng-template>

@@ -18,20 +18,16 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    let [responses$, others$] = partition(
-      next.handle(request),
-      (event: HttpEvent<unknown>): event is HttpResponse<unknown> => event.type == HttpEventType.Response
-    );
+    return next.handle(request).pipe(
+      tap((event) => {
+        if (event.type != HttpEventType.Response) return;
 
-    responses$ = responses$.pipe(
-      tap((response) => {
-        let errorMessage: string | null | undefined = (response.body as any)?.error?.description
-        if (errorMessage) {
-          this.toastService.error(errorMessage);
+        if (!(typeof event.body == 'object' && event.body != null)) return;
+
+        if ('error' in event.body) {
+          this.toastService.error(JSON.stringify(event.body.error));
         }
       })
-    );
-
-    return merge(responses$, others$);
+    )
   }
 }

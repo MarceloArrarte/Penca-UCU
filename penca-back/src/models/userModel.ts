@@ -6,7 +6,10 @@ interface User {
   name: string;
   email: string;
   password: string;
+  role: UserRole
 }
+
+type UserRole = 'admin' | 'alumno';
 
 const getAllUsers = (): Promise<User[]> => {
   return new Promise((resolve, reject) => {
@@ -22,7 +25,20 @@ const getAllUsers = (): Promise<User[]> => {
 
 const getUserByEmail = (email: string): Promise<User> => {
   return new Promise((resolve, reject) => {
-    db.query('SELECT documento, nombre, email, contraseña AS password FROM usuario WHERE email = ?', [email], (err, results) => {
+    db.query(`
+      SELECT
+        u.documento AS document,
+        u.nombre,
+        u.email,
+        u.contraseña AS password,
+        CASE
+          WHEN a.documento_usuario IS NOT NULL THEN 'admin'
+          WHEN a2.documento_usuario IS NOT NULL THEN 'alumno'
+        END AS role
+      FROM usuario u
+      LEFT JOIN admin a ON a.documento_usuario = u.documento
+      LEFT JOIN alumno a2 ON a2.documento_usuario = u.documento
+      WHERE email = ?`, [email], (err, results) => {
       if (err) { return reject(err); }
 
       const users = results as RowDataPacket[];

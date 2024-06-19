@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'node --inspect=0.0.0.0 --require ts-node/register src/index.ts' -e ts"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
     "mysql2": "^3.10.0"
   },
   "devDependencies": {
@@ -24,6 +25,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/morgan": "^1.9.9",
     "nodemon": "^3.1.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5"
