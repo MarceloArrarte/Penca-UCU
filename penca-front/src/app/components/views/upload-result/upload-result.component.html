@@ -1,23 +1,20 @@
-<ng-container *ngIf="matchData$ | async as matchData">
-    <ng-container *ngIf="formGroup$ | async as formGroup">
+<ng-container *ngIf="matchData && formGroup">
+    <h2>{{ matchData.fase }}</h2>
+    <div class="row my-5">
+        <app-team-img [equipo]="matchData.equipos[0].name"></app-team-img>
+        <app-up-down-input [control]="formGroup.controls.result1"></app-up-down-input>
+    </div>
+    <div class="row flex-row-reverse my-5">
+        <app-team-img [equipo]="matchData.equipos[1].name"></app-team-img>
+        <app-up-down-input [control]="formGroup.controls.result2"></app-up-down-input>
+    </div>
 
-        <h2>{{ matchData.fase }}</h2>
-        <div class="row my-5">
-            <app-team-img [equipo]="matchData.equipos[0].name"></app-team-img>
-            <app-up-down-input [control]="formGroup.controls.result1"></app-up-down-input>
-        </div>
-        <div class="row flex-row-reverse my-5">
-            <app-team-img [equipo]="matchData.equipos[1].name"></app-team-img>
-            <app-up-down-input [control]="formGroup.controls.result2"></app-up-down-input>
-        </div>
-
-        <div class="action-buttons d-flex justify-content-around mt-auto mb-5">
-            <button nbButton class="py-3" status="danger" shape="semi-round" (click)="navigateBack()">
-                Cancelar
-            </button>
-            <button nbButton class="py-3" status="success" shape="semi-round" (click)="uploadResult()">
-                Confirmar
-            </button>
-        </div>
-    </ng-container>
+    <div class="action-buttons d-flex justify-content-around mt-auto mb-5">
+        <button nbButton class="py-3" status="danger" shape="semi-round" (click)="navigateBack()">
+            Cancelar
+        </button>
+        <button nbButton class="py-3" status="success" shape="semi-round" (click)="uploadResult()">
+            Confirmar
+        </button>
+    </div>
 </ng-container>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { PlayedMatch } from 'src/app/classes/match';
+import { Match, PlayedMatch } from 'src/app/classes/match';
 import { MatchesService } from 'src/app/services/matches.service';
 
 @Component({
@@ -16,7 +16,10 @@ export class PlayedMatchesListAdminComponent {
     this.matches$ = matchesService.getPlayedMatches();
   }
 
-  navCargarResultado(matchId: number): void {
-    this.router.navigateByUrl(`/admin/matches/${matchId}/result?returnUrl=/admin/matches/played`);
+  navCargarResultado(match: PlayedMatch): void {
+    this.router.navigateByUrl(
+      `/admin/matches/${match.id}/result?returnUrl=/admin/matches/played`,
+      { state: { match }}
+    );
   }
 }

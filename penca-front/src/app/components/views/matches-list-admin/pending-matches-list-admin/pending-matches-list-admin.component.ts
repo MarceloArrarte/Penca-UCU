@@ -21,7 +21,10 @@ export class PendingMatchesListAdminComponent {
     this.matches$ = matchService.getPendingMatches();
   }
 
-  navCargarResultado(matchId: number): void {
-    this.router.navigateByUrl(`/admin/matches/${matchId}/result?returnUrl=/admin/matches/pending`);
+  navCargarResultado(match: Match): void {
+    this.router.navigateByUrl(
+      `/admin/matches/${match.id}/result?returnUrl=/admin/matches/pending`,
+      { state: { match }}
+    );
   }
 }

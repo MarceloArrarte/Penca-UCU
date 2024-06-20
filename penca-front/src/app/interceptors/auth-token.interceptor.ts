@@ -38,6 +38,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         if (err.status == 401) {
           this.toastService.error('Su sesión ha expirado. Por favor, inicie sesión nuevamente.');
+          this.authHelper.clearToken();
           this.authHelper.navigateToLogin();
         }
         return throwError(() => err);

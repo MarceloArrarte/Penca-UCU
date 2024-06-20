@@ -15,17 +15,13 @@ import { rxjsUtils } from 'src/app/utils/rxjs';
   styleUrls: ['./make-prediction.component.scss']
 })
 export class MakePredictionComponent {
-  matchData$: Observable<Match | undefined>;
-  formGroup$?: Observable<FormGroup<{
-    prediction1: FormControl<number>,
-    prediction2: FormControl<number>
-  }>>;
+  matchData?: Match;
 
-  id?: number;
   formGroup?: FormGroup<{
     prediction1: FormControl<number>,
     prediction2: FormControl<number>
   }>;
+  returnUrl$: Observable<string | null>;
 
   constructor(
     titleService: MainTitleService,
@@ -35,35 +31,21 @@ export class MakePredictionComponent {
     private toastService: ToastService
   ) {
     titleService.title$.next('Realizar predicción');
-    const fb = new FormBuilder();
 
-    this.matchData$ = this.route.paramMap.pipe(
-      map((paramMap) => paramMap.get('id') || ''),
-      switchMap((id) => {        
-        if (numberUtils.isInteger(id)) {
-          return this.matchesService.getMatch(parseInt(id));
-        }
-        else {
-          return throwError(() => `${id} no es un ID de partido válido`);
-        }
-      }),
-      tap((matchData) => this.id = matchData.id),
-      catchError((error) => {
-        toastService.error(error);
-        return of(undefined);
+    this.matchData = router.getCurrentNavigation()?.extras.state?.['match'];
+    if (!this.matchData) {
+      toastService.error('Error al cargar información del partido.');
+    }
+    else {
+      const fb = new FormBuilder();
+      this.formGroup = fb.group({
+        prediction1: new FormControl<number>(this.matchData.prediccion?.[0] ?? 0, { nonNullable: true }),
+        prediction2: new FormControl<number>(this.matchData.prediccion?.[1] ?? 0, { nonNullable: true })
       })
-    );
-
-    this.formGroup$ = this.matchData$.pipe(
-      rxjsUtils.notNullish<Match>(),
-      map((matchData) => fb.group({
-          prediction1: new FormControl<number>(matchData.prediccion?.[0] ?? 0, { nonNullable: true }),
-          prediction2: new FormControl<number>(matchData.prediccion?.[1] ?? 0, { nonNullable: true })
-        })
-      ),
-      tap((formGroup) => {
-        this.formGroup = formGroup;
-      })
+    }
+    
+    this.returnUrl$ = this.route.queryParamMap.pipe(
+      map((queryParamMap) => queryParamMap.get('returnUrl'))
     );
   }
 
@@ -76,7 +58,7 @@ export class MakePredictionComponent {
     const prediction: MatchPrediction = [ formValue.prediction1!, formValue.prediction2! ];
 
     this.matchesService.sendPrediction(
-      this.id!,
+      match.id,
       {
         predictions: [
           {teamId: match.equipos[0].id, goalsPredict: prediction[0]},
