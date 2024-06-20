@@ -25,7 +25,7 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: 'Token is not valid or has expired' });
+      return res.status(401).json({ message: 'Token is not valid or has expired' });
     }
 
     req.user = decoded as DecodedToken;

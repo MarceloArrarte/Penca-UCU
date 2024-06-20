@@ -14,30 +14,35 @@ interface MatchPrediction {
 
 const predictTeamsGoalsForMatch = (userDocument: number, matchId: number, predictions: Prediction[]): Promise<MatchPrediction> => {
   return new Promise((resolve, reject) => {
-    db.beginTransaction(err => {
+    db.beginTransaction(async err => {
       if (err) { return reject(err); }
 
-      db.query(`SELECT fecha_hora FROM partido where id = ?`, [matchId], (err, results) => {
-        if (err) { return db.rollback(() => { reject(err); }); }
-
-        const match = results as RowDataPacket[];
-
-        if (!match[0]) {
-          db.rollback(() => {
-            reject('Match does not exists')
-          });
-        }
-
-        const matchDate = new Date(match[0].fecha_hora);
-        const currentDateUTC = new Date();
-        const currentDate = new Date(currentDateUTC.getTime() - (3 * 60 * 60 * 1000));
-
-        if (matchDate <= currentDate) {
-          return db.rollback(() => {
-            reject('Cannot predict a match that has already started');
-          });
-        }
-      });
+      await new Promise<void>((resolve, reject) => {
+        db.query(`SELECT fecha_hora FROM partido where id = ?`, [matchId], (err, results) => {
+          if (err) { return db.rollback(() => { reject(err); }); }
+  
+          const match = results as RowDataPacket[];
+  
+          if (!match[0]) {
+            db.rollback(() => {
+              reject('Match does not exists')
+            });
+          }
+  
+          const matchDate = new Date(match[0].fecha_hora);
+          const currentDateUTC = new Date();
+          const currentDate = new Date(currentDateUTC.getTime() - (3 * 60 * 60 * 1000));
+  
+          if (matchDate <= currentDate) {
+            return db.rollback(() => {
+              reject('Cannot predict a match that has already started');
+            });
+          }
+          else {
+            resolve();
+          }
+        });
+      }).catch(reject);
 
       const matchPrediction : MatchPrediction = {
         userDocument: userDocument,

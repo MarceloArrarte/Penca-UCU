@@ -20,7 +20,7 @@ export class MatchesService extends ApiService {
   getUpcomingMatches(): Observable<Match[]> {
     return this.apiUrl$.pipe(
       switchMap((apiUrl) => {
-        return this.http.get<MatchModel[] | ApiError>(`${apiUrl}/matchesAndUsersPredictions`).pipe(
+        return this.http.get<MatchModel[] | ApiError>(`${apiUrl}/matchesAndUsersPredictions?played=false`).pipe(
           switchMap((response) => {
             if ('error' in response) {
               return throwError(() => response.error);
@@ -74,6 +74,37 @@ export class MatchesService extends ApiService {
   }
 
   getPlayedMatches(): Observable<PlayedMatch[]> {
+
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.get<MatchModel[] | ApiError>(`${apiUrl}/matchesAndUsersPredictions?played=true`).pipe(
+          switchMap((response) => {
+            if ('error' in response) {
+              return throwError(() => response.error);
+            }
+            else {
+              return of(response);
+            }
+          })
+        );
+      }),
+      map<MatchModel[], PlayedMatch[]>((data) => data.map<PlayedMatch>((match) => {
+        const equipos = match.teams.map((team) => ({ id: team.idTeam, name: team.country})) as MatchTeams;
+        const predicciones = match.teams.map((team) => team.goalsPredict) as MatchPrediction;
+        const resultado = match.teams.map((team) => team.goals) as MatchResult
+
+        return new PlayedMatch({
+          id: match.id,
+          datetime: new Date(match.date),
+          fase: match.phase,
+          equipos,
+          prediccion: predicciones.some((p) => p) ? predicciones : undefined,
+          resultado
+        })
+      }))
+    );
+
+
     return of(_playedMatches).pipe(
       map((res) => res.map((obj) => new PlayedMatch(obj)))
     );
