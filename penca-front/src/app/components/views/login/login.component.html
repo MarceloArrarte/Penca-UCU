@@ -13,10 +13,13 @@
           <label for="password">Contraseña</label>
           <input nbInput fullWidth type="password" id="password" placeholder="**********" [formControlName]="'password'"/>
         </div>
-        <!-- <div class="form-group forgot-password-container">
+        <div class="form-group forgot-password-container">
           <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
-        </div> -->
+        </div>
         <button nbButton status="primary" fullWidth (click)="login()">Ingresar</button>
+        <div class="form-group forgot-password-container d-flex justify-content-end mt-5 mb-0">
+          <a routerLink="/sign-up" class="forgot-password">Registrarme</a>
+        </div>
       </form>
     </nb-card-body>
   </nb-card>

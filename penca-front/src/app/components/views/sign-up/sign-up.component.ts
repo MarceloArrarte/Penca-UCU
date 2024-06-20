@@ -2,6 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TeamSelectorService } from 'src/app/services/team-selector.service';
 import { IEquipo } from 'src/app/classes/equipo.model';
+import { TeamsService } from 'src/app/services/teams.service';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,7 +12,7 @@ import { IEquipo } from 'src/app/classes/equipo.model';
   styleUrls: ['./sign-up.component.scss'],
   providers: [TeamSelectorService]
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   nombre: string = '';
   documento: string = '';
   email: string = '';
@@ -17,39 +20,28 @@ export class SignUpComponent implements OnInit {
   selectedCampeon: IEquipo | null = null;
   selectedSubCampeon: IEquipo | null = null;
 
-  teams: IEquipo[] = [];
-  filteredTeamsForCampeon: IEquipo[] = [];
-  filteredTeamsForSubCampeon: IEquipo[] = [];
+  unselectedTeams$: Observable<IEquipo[]>;
 
-  constructor(private teamSelectorService: TeamSelectorService) {}
-
-  ngOnInit() {
-    this.teams = this.teamSelectorService.getTeams();
-    this.filteredTeamsForCampeon = [...this.teams];
-    this.filteredTeamsForSubCampeon = [...this.teams];
-
-    this.teamSelectorService.selectedCampeon$.subscribe(selectedUser => {
-      this.selectedCampeon = selectedUser;
-      this.updateFilteredTeams();
-    });
-
-    this.teamSelectorService.selectedSubCampeon$.subscribe(selectedUser => {
-      this.selectedSubCampeon = selectedUser;
-      this.updateFilteredTeams();
-    });
+  constructor(private teamSelectorService: TeamSelectorService, private authService: AuthService) {
+    this.unselectedTeams$ = teamSelectorService.unselectedTeams$;
   }
 
-  onCampeonChange(selectedUser: IEquipo) {
-    this.teamSelectorService.selectCampeon(selectedUser);
+  onCampeonChange(selectedTeam: IEquipo) {
+    this.teamSelectorService.selectCampeon(selectedTeam);
   }
 
-  onSubCampeonChange(selectedUser: IEquipo) {
-    this.teamSelectorService.selectSubCampeon(selectedUser);
+  onSubCampeonChange(selectedTeam: IEquipo) {
+    this.teamSelectorService.selectSubCampeon(selectedTeam);
   }
 
-  updateFilteredTeams() {
-    const { filteredTeamsForCampeon, filteredTeamsForSubCampeon } = this.teamSelectorService.filterTeams();
-    this.filteredTeamsForCampeon = filteredTeamsForCampeon;
-    this.filteredTeamsForSubCampeon = filteredTeamsForSubCampeon;
+  signUp() {
+    this.authService.signUp({
+      document: this.documento,
+      name: this.nombre,
+      email: this.email,
+      password: this.contrasena,
+      championId: this.selectedCampeon!.id,
+      runnerUpId: this.selectedSubCampeon!.id
+    }).subscribe()
   }
 }

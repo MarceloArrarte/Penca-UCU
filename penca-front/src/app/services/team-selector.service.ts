@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, concat, first, map, merge, take, withLatestFrom } from 'rxjs';
 import { IEquipo } from '../classes/equipo.model';
+import { TeamsService } from './teams.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamSelectorService {
-  private equipos: IEquipo[] = [
-    { name: 'Bolivia', picture: 'Bolivia.png' },
-    { name: 'Argentina', picture: 'Argentina.png' },
-    { name: 'Uruguay', picture: 'Uruguay.png' }
-  ];
 
   private selectedCampeonSubject = new BehaviorSubject<IEquipo | null>(null);
   private selectedSubCampeonSubject = new BehaviorSubject<IEquipo | null>(null);
@@ -18,8 +14,26 @@ export class TeamSelectorService {
   selectedCampeon$ = this.selectedCampeonSubject.asObservable();
   selectedSubCampeon$ = this.selectedSubCampeonSubject.asObservable();
 
+  teams$: Observable<IEquipo[]>;
+  unselectedTeams$: Observable<IEquipo[]>;
+
+  constructor(teamsService: TeamsService) {
+    this.teams$ = teamsService.getAll();
+
+    this.unselectedTeams$ = concat(
+      this.teams$.pipe(first()),
+      combineLatest([this.selectedCampeon$, this.selectedSubCampeon$]).pipe(
+        map((teams) => teams.filter((t): t is IEquipo => !!t).map((t) => t.id)),
+        withLatestFrom(this.teams$),
+        map(([selected, all]) => {
+          return all.filter((team) => !selected.includes(team.id))
+        })
+      )
+    );
+  }
+
   getTeams() {
-    return this.equipos;
+    return this.teams$;
   }
 
   selectCampeon(equipo: IEquipo) {
@@ -28,15 +42,5 @@ export class TeamSelectorService {
 
   selectSubCampeon(equipo: IEquipo) {
     this.selectedSubCampeonSubject.next(equipo);
-  }
-
-  filterTeams() {
-    const selectedCampeon = this.selectedCampeonSubject.value;
-    const selectedSubCampeon = this.selectedSubCampeonSubject.value;
-
-    const filteredTeamsForCampeon = this.equipos.filter(equipo => equipo !== selectedSubCampeon);
-    const filteredTeamsForSubCampeon = this.equipos.filter(equipo => equipo !== selectedCampeon);
-
-    return { filteredTeamsForCampeon, filteredTeamsForSubCampeon };
   }
 }

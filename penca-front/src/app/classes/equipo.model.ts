@@ -1,4 +1,5 @@
 export interface IEquipo {
-    name: string;
-    picture: string;
-  }
+  id: number;
+  name: string;
+  picture: string;
+}
