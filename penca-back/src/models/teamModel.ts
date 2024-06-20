@@ -8,7 +8,7 @@ interface Team {
 
 const getAllTeams = () => {
     return new Promise((resolve, reject) => {
-      db.query('SELECT id, pais FROM equipo', (err, results) => {
+      db.query('SELECT id, pais FROM equipo ORDER BY pais', (err, results) => {
         if (err) { return reject(err); }
   
         const teams: Team[] = results as Team[];
