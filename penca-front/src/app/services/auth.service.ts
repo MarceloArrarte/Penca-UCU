@@ -39,4 +39,28 @@ export class AuthService extends ApiService {
     this.authHelper.clearToken();
     this.authHelper.navigateToLogin();
   }
+
+  signUp(data: SignUpModel): Observable<boolean> {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.post<{ message: string } | ApiError>(`${apiUrl}/register`, data)
+      }),
+      map((response) => !('error' in response)),
+      tap((result) => {
+        if (result) {
+          this.authHelper.navigateToLogin();
+        }
+      })
+    );
+  }
+}
+
+
+interface SignUpModel {
+  document: string;
+  name: string;
+  email: string;
+  password: string;
+  championId: number;
+  runnerUpId: number;
 }

@@ -4,6 +4,7 @@ import { TeamSelectorService } from 'src/app/services/team-selector.service';
 import { IEquipo } from 'src/app/classes/equipo.model';
 import { TeamsService } from 'src/app/services/teams.service';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,9 +22,8 @@ export class SignUpComponent {
 
   unselectedTeams$: Observable<IEquipo[]>;
 
-  constructor(private teamSelectorService: TeamSelectorService) {
+  constructor(private teamSelectorService: TeamSelectorService, private authService: AuthService) {
     this.unselectedTeams$ = teamSelectorService.unselectedTeams$;
-
   }
 
   onCampeonChange(selectedTeam: IEquipo) {
@@ -32,5 +32,16 @@ export class SignUpComponent {
 
   onSubCampeonChange(selectedTeam: IEquipo) {
     this.teamSelectorService.selectSubCampeon(selectedTeam);
+  }
+
+  signUp() {
+    this.authService.signUp({
+      document: this.documento,
+      name: this.nombre,
+      email: this.email,
+      password: this.contrasena,
+      championId: this.selectedCampeon!.id,
+      runnerUpId: this.selectedSubCampeon!.id
+    }).subscribe()
   }
 }
