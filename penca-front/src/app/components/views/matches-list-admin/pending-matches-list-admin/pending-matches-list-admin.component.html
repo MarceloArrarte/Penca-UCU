@@ -5,7 +5,7 @@
                 <nb-card>
                     <nb-card-body>
                         <div class="card-resultado">
-                            <app-team-img [equipo]="match.equipos[0]"></app-team-img>
+                            <app-team-img [equipo]="match.equipos[0].name"></app-team-img>
                             <div class="container-btn-cargar">
                                 <button
                                     nbButton
@@ -16,12 +16,12 @@
                                     Cargar
                                 </button>
                             </div>
-                            <app-team-img [equipo]="match.equipos[1]"></app-team-img>
+                            <app-team-img [equipo]="match.equipos[1].name"></app-team-img>
                         </div>
                     </nb-card-body>
                     <nb-card-footer>
                         <p>{{ match.datetime | date: "dd/MM/yyyy HH:mm" }}</p>
-                        <p>{{ match.fase }} - Jornada {{ match.jornada }}</p>
+                        <p>{{ match.fase }}</p>
                     </nb-card-footer>
                 </nb-card>
             </div>

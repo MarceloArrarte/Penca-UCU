@@ -71,11 +71,19 @@ export class MakePredictionComponent {
     this.router.navigateByUrl('/matches/upcoming');
   }
 
-  sendPrediction() {
+  sendPrediction(match: Match) {
     const formValue = this.formGroup!.value;
     const prediction: MatchPrediction = [ formValue.prediction1!, formValue.prediction2! ];
 
-    this.matchesService.sendPrediction(this.id!, prediction).subscribe((success) => {
+    this.matchesService.sendPrediction(
+      this.id!,
+      {
+        predictions: [
+          {teamId: match.equipos[0].id, goalsPredict: prediction[0]},
+          {teamId: match.equipos[1].id, goalsPredict: prediction[1]}
+        ]
+      }
+    ).subscribe((success) => {
       if (success) {
         this.toastService.success('¡Predicción guardada!');
         this.navUpcomingMatches();

@@ -111,7 +111,7 @@ const getMatchesAndPredictions = (userDocument: number, played: string): Promise
 
         matchesMap[matchId].teams.push(
           {
-            idTeam: row.id_partido,
+            idTeam: row.id_equipo,
             country: row.pais,
             goalsPredict: row.prediccion_goles,
             goals: row.goles
