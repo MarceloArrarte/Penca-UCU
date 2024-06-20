@@ -4,7 +4,7 @@ import { getMatchesAndPredictions, getAllMatches, updateMatchTeams } from '../mo
 const getMatchesAndUserPredictions = async (req: Request, res: Response) => {
   try {
     const played = String(req.query.played);
-    const userDocument = Number(req.params.user_document);
+    const userDocument = Number(req.user?.document);
 
     const matchs = await getMatchesAndPredictions(userDocument, played);
 

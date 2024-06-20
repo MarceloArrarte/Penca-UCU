@@ -2,16 +2,16 @@ import { Request, Response } from 'express';
 import { predictTeamsGoalsForMatch } from '../models/predictionModel';
 
 const predictMatchResults = async (req: Request, res: Response) => {
-  const { userDocument, matchId, predictions } = req.body;
+  const matchId = Number(req.params.matchId);
+  const userDocument = Number(req.user?.document);
+  const predictions = req.body.predictions;
 
   try {
     const matchPredictions = await predictTeamsGoalsForMatch(userDocument, matchId, predictions);
 
-    if (!matchPredictions) { return res.status(409).json({ error: 'Error when create predictions' }); }
-
-    res.status(201).json({ message: 'Match predicted', matchPredictions: matchPredictions });
+    res.status(201).json({ matchPredictions: matchPredictions });
   } catch (err) {
-    return res.status(500).json({ error: 'Database Error' });
+    return res.status(500).json({ error: 'Database Error', message: err });
   }
 };
 

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getAllUsers, getUserByEmail, createUser, getUserByEmailOrDocument } from '../models/userModel';
+
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
@@ -8,7 +9,7 @@ dotenv.config();
 
 const secretKey = process.env.JWT_SECRET || 'your_default_secret_key'
 
-const getUsers = async (req: Request, res: Response) => {
+const getUsersRanking = async (req: Request, res: Response) => {
   try {
     const users = await getAllUsers();
 
@@ -60,4 +61,4 @@ const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsers, loginUser, registerUser };
+export { getUsersRanking, loginUser, registerUser };
