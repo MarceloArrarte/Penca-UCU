@@ -125,26 +125,7 @@ export class MatchesService extends ApiService {
         })
       }))
     );
-
-
-    return of(_playedMatches).pipe(
-      map((res) => res.map((obj) => new PlayedMatch(obj)))
-    );
   }
-
-  // getMatch(id: number): Observable<Match> {
-  //   return of([..._playedMatches, ..._upcomingMatches].find((match) => match.id == id)).pipe(
-  //     switchMap((res) => {
-  //       if (res) {
-  //         return of(res);
-  //       }
-  //       else {
-  //         return throwError(() => `Partido con ID ${id} no encontrado`);
-  //       }
-  //     }),
-  //     map((res) => (<PlayedMatch>res).resultado ? new PlayedMatch(<PlayedMatch>res) : new Match(res))
-  //   );
-  // }
 
   sendPrediction(matchId: number, data: MatchPredictionsModel): Observable<boolean> {
     return this.apiUrl$.pipe(
