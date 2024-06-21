@@ -18,7 +18,6 @@ export class UploadResultComponent {
   matchData?: Match;
   returnUrl$: Observable<string | null>;
 
-  id?: number;
   formGroup?: FormGroup<{
     result1: FormControl<number>,
     result2: FormControl<number>
@@ -56,11 +55,11 @@ export class UploadResultComponent {
     });
   }
 
-  uploadResult() {
+  uploadResult(match: Match) {
     const formValue = this.formGroup!.value;
     const result: MatchResult = [ formValue.result1!, formValue.result2! ];
 
-    this.matchesService.uploadResult(this.id!, result).pipe(
+    this.matchesService.uploadResult(match.id, result).pipe(
       tap((success) => {
         if (success) {
           this.toastService.success('¡Resultado guardado!');
