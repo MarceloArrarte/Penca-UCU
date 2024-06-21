@@ -230,4 +230,26 @@ const insertOrUpdateMatchResult = (
 type MatchTeamResult = { teamId: number, goals: number };
 type MatchResult = [MatchTeamResult, MatchTeamResult];
 
-export { getMatchesAndPredictions, getAllMatches, updateMatchTeams, insertOrUpdateMatchResult};
+
+const getAllMatchesToBeDetermined = (): Promise<Omit<MatchWithResult, 'teams'>[]> => {
+  return new Promise((resolve, reject) => {
+    db.query(`
+      SELECT p.id, p.fecha_hora, p.nombre_fase
+      FROM partido p
+      LEFT JOIN juega j ON j.id_partido = p.id
+      WHERE id_partido IS NULL;`,
+      (err, results) => {
+        if (err) { return reject(err); }
+
+        resolve(results as Omit<MatchWithResult, 'teams'>[]);
+      });
+  });
+}
+
+export {
+  getMatchesAndPredictions,
+  getAllMatches,
+  updateMatchTeams,
+  insertOrUpdateMatchResult,
+  getAllMatchesToBeDetermined
+};
