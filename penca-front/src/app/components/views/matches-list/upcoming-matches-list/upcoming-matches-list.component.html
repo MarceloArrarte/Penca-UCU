@@ -12,7 +12,7 @@
                             status="primary"
                             shape="round"
                             [ngClass]="{ 'show-disabled': !match.newPredictionAllowed }"
-                            (click)="match.newPredictionAllowed ? navIngresarPrediccion(match.id) : mostrarInfoPrediccionesCerradas(match)"
+                            (click)="match.newPredictionAllowed ? navIngresarPrediccion(match) : mostrarInfoPrediccionesCerradas(match)"
                         >
                             <span class="spacing-prediccion">{{ match.prediccion[0] }}-</span>
                             {{ match.prediccion[1] }}
@@ -25,7 +25,7 @@
                                 status="primary"
                                 shape="round"
                                 [ngClass]="{ 'show-disabled': !match.newPredictionAllowed }"
-                                (click)="match.newPredictionAllowed ? navIngresarPrediccion(match.id) : mostrarInfoPrediccionesCerradas(match)"
+                                (click)="match.newPredictionAllowed ? navIngresarPrediccion(match) : mostrarInfoPrediccionesCerradas(match)"
                             >
                                 Ingresar
                             </button>

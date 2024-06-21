@@ -15,14 +15,9 @@ import { rxjsUtils } from 'src/app/utils/rxjs';
   styleUrls: ['./upload-result.component.scss']
 })
 export class UploadResultComponent {
-  matchData$: Observable<Match | undefined>;
-  formGroup$?: Observable<FormGroup<{
-    result1: FormControl<number>,
-    result2: FormControl<number>
-  }>>;
+  matchData?: Match;
   returnUrl$: Observable<string | null>;
 
-  id?: number;
   formGroup?: FormGroup<{
     result1: FormControl<number>,
     result2: FormControl<number>
@@ -36,41 +31,21 @@ export class UploadResultComponent {
     private toastService: ToastService
   ) {
     titleService.title$.next('Cargar resultado');
-    const fb = new FormBuilder();
 
-    this.matchData$ = this.route.paramMap.pipe(
-      map((paramMap) => paramMap.get('id') || ''),
-      switchMap((id) => {        
-        if (numberUtils.isInteger(id)) {
-          return this.matchesService.getMatch(parseInt(id));
-        }
-        else {
-          return throwError(() => `${id} no es un ID de partido válido`);
-        }
-      }),
-      tap((matchData) => {
-        this.id = matchData.id;
-      }),
-      catchError((error) => {
-        toastService.error(error);
-        return of(undefined);
+    this.matchData = router.getCurrentNavigation()?.extras.state?.['match'];
+    if (!this.matchData) {
+      toastService.error('Error al cargar información del partido.');
+    }
+    else {
+      const fb = new FormBuilder();
+      this.formGroup = fb.group({
+        result1: new FormControl<number>((<PlayedMatch>this.matchData).resultado?.[0] ?? 0, { nonNullable: true }),
+        result2: new FormControl<number>((<PlayedMatch>this.matchData).resultado?.[1] ?? 0, { nonNullable: true })
       })
-    );
-
+    }
+    
     this.returnUrl$ = this.route.queryParamMap.pipe(
       map((queryParamMap) => queryParamMap.get('returnUrl'))
-    );
-
-    this.formGroup$ = this.matchData$.pipe(
-      rxjsUtils.notNullish<Match>(),
-      map((matchData) => fb.group({
-          result1: new FormControl<number>((<PlayedMatch>matchData).resultado?.[0] ?? 0, { nonNullable: true }),
-          result2: new FormControl<number>((<PlayedMatch>matchData).resultado?.[1] ?? 0, { nonNullable: true })
-        })
-      ),
-      tap((formGroup) => {
-        this.formGroup = formGroup;
-      })
     );
   }
 
@@ -80,11 +55,11 @@ export class UploadResultComponent {
     });
   }
 
-  uploadResult() {
+  uploadResult(match: Match) {
     const formValue = this.formGroup!.value;
     const result: MatchResult = [ formValue.result1!, formValue.result2! ];
 
-    this.matchesService.uploadResult(this.id!, result).pipe(
+    this.matchesService.uploadResult(match.id, result).pipe(
       tap((success) => {
         if (success) {
           this.toastService.success('¡Resultado guardado!');

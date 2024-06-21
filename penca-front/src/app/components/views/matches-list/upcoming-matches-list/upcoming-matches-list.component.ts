@@ -31,8 +31,8 @@ export class UpcomingMatchesListComponent {
     );
   }
 
-  navIngresarPrediccion(matchId: number): void {
-    this.router.navigateByUrl(`/matches/${matchId}/prediction`);
+  navIngresarPrediccion(match: Match): void {
+    this.router.navigateByUrl(`/matches/${match.id}/prediction`, { state: { match }});
   }
 
   mostrarInfoPrediccionesCerradas(match: Match): void {

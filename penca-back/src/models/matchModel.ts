@@ -78,9 +78,9 @@ const getMatchesAndPredictions = (userDocument: number, played: string): Promise
     let playedFilter = ''
 
     if (played == 'true') {
-      playedFilter = `where pr.goles IS NOT NULL`;
+      playedFilter = `where j.goles IS NOT NULL`;
     } else if (played == 'false') {
-      playedFilter = `where pr.goles IS NULL`;
+      playedFilter = `where j.goles IS NULL`;
     }
 
     db.query(`

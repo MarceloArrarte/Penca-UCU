@@ -20,7 +20,7 @@ export class MatchesService extends ApiService {
   getUpcomingMatches(): Observable<Match[]> {
     return this.apiUrl$.pipe(
       switchMap((apiUrl) => {
-        return this.http.get<MatchModel[] | ApiError>(`${apiUrl}/matchesAndUsersPredictions`).pipe(
+        return this.http.get<MatchModel[] | ApiError>(`${apiUrl}/matchesAndUsersPredictions?played=false`).pipe(
           switchMap((response) => {
             if ('error' in response) {
               return throwError(() => response.error);
@@ -47,51 +47,104 @@ export class MatchesService extends ApiService {
   }
 
   getPendingMatches(): Observable<Match[]> {
-    // return this.apiUrl$.pipe(
-    //   switchMap((apiUrl) => {
-    //     return this.http.get<MatchModel[] | ApiError>(`${apiUrl}/matchesAndUsersPredictions`).pipe(
-    //       switchMap((response) => {
-    //         if ('error' in response) {
-    //           return throwError(() => response.error);
-    //         }
-    //         else {
-    //           return of(response);
-    //         }
-    //       })
-    //     );
-    //   }),
-    //   map<MatchModel[], Match[]>((data) => data.map<Match>((match) => new Match({
-    //     id: match.id,
-    //     datetime: new Date(match.date),
-    //     fase: match.phase,
-    //     jornada:
-    //   })))
-    // );
-
-    return of(_upcomingMatches.filter((m) => isPast(m.datetime))).pipe(
-      map((res) => res.map((obj) => new Match(obj)))
+    return this.getAllMatches().pipe(
+      map((matches) => matches.filter((match) => !(match instanceof PlayedMatch)))
     );
   }
 
+  private getAllMatches() {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.get<MatchModel[] | ApiError>(`${apiUrl}/matches`).pipe(
+          switchMap((response) => {
+            if ('error' in response) {
+              return throwError(() => response.error);
+            }
+            else {
+              return of(response);
+            }
+          })
+        );
+      }),
+      map<MatchModel[], Match[]>((data) => {
+        return data.map((match) => {
+          const equipos = match.teams.map((team) => ({ id: team.idTeam, name: team.country})) as MatchTeams;
+          const predicciones = match.teams.map((team) => team.goalsPredict) as MatchPrediction;
+          const resultado = match.teams.map((team) => team.goals) as MatchResult;
+
+          if (resultado.some((x) => x)) {
+            return new PlayedMatch({
+              id: match.id,
+              datetime: new Date(match.date),
+              fase: match.phase,
+              equipos,
+              prediccion: predicciones.some((p) => p) ? predicciones : undefined,
+              resultado
+            });
+          }
+          else {
+            return new Match({
+              id: match.id,
+              datetime: new Date(match.date),
+              fase: match.phase,
+              equipos,
+              prediccion: predicciones.some((p) => p) ? predicciones : undefined
+            });
+          }
+        })
+      }));
+  }
+
   getPlayedMatches(): Observable<PlayedMatch[]> {
+
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.get<MatchModel[] | ApiError>(`${apiUrl}/matchesAndUsersPredictions?played=true`).pipe(
+          switchMap((response) => {
+            if ('error' in response) {
+              return throwError(() => response.error);
+            }
+            else {
+              return of(response);
+            }
+          })
+        );
+      }),
+      map<MatchModel[], PlayedMatch[]>((data) => data.map<PlayedMatch>((match) => {
+        const equipos = match.teams.map((team) => ({ id: team.idTeam, name: team.country})) as MatchTeams;
+        const predicciones = match.teams.map((team) => team.goalsPredict) as MatchPrediction;
+        const resultado = match.teams.map((team) => team.goals) as MatchResult
+
+        return new PlayedMatch({
+          id: match.id,
+          datetime: new Date(match.date),
+          fase: match.phase,
+          equipos,
+          prediccion: predicciones.some((p) => p) ? predicciones : undefined,
+          resultado
+        })
+      }))
+    );
+
+
     return of(_playedMatches).pipe(
       map((res) => res.map((obj) => new PlayedMatch(obj)))
     );
   }
 
-  getMatch(id: number): Observable<Match> {
-    return of([..._playedMatches, ..._upcomingMatches].find((match) => match.id == id)).pipe(
-      switchMap((res) => {
-        if (res) {
-          return of(res);
-        }
-        else {
-          return throwError(() => `Partido con ID ${id} no encontrado`);
-        }
-      }),
-      map((res) => (<PlayedMatch>res).resultado ? new PlayedMatch(<PlayedMatch>res) : new Match(res))
-    );
-  }
+  // getMatch(id: number): Observable<Match> {
+  //   return of([..._playedMatches, ..._upcomingMatches].find((match) => match.id == id)).pipe(
+  //     switchMap((res) => {
+  //       if (res) {
+  //         return of(res);
+  //       }
+  //       else {
+  //         return throwError(() => `Partido con ID ${id} no encontrado`);
+  //       }
+  //     }),
+  //     map((res) => (<PlayedMatch>res).resultado ? new PlayedMatch(<PlayedMatch>res) : new Match(res))
+  //   );
+  // }
 
   sendPrediction(matchId: number, data: MatchPredictionsModel): Observable<boolean> {
     return this.apiUrl$.pipe(
