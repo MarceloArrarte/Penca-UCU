@@ -21,7 +21,7 @@ interface TeamResult {
   goals: number | null; 
 }
 
-interface MatchAndResult {
+interface MatchWithResult {
   id: number;
   date: string;
   phase: string;
@@ -33,7 +33,7 @@ interface MatchTeams {
   teamIds: number[];
 } 
 
-const getAllMatches = (): Promise<MatchAndResult[]> => {
+const getAllMatches = (): Promise<MatchWithResult[]> => {
   return new Promise((resolve, reject) => {
     db.query(`
       SELECT p.id, p.fecha_hora, p.nombre_fase, e.id AS id_equipo, e.pais, j.goles FROM partido p
@@ -43,7 +43,7 @@ const getAllMatches = (): Promise<MatchAndResult[]> => {
       if (err) { return reject(err); }
 
       const rows = results as RowDataPacket[];
-      const matchesMap: { [key: number]: MatchAndResult } = {};
+      const matchesMap: { [key: number]: MatchWithResult } = {};
       
       rows.forEach(row => {
         const matchId = row.id;
@@ -66,9 +66,9 @@ const getAllMatches = (): Promise<MatchAndResult[]> => {
         )
       })
 
-      const matches: MatchAndResult[] = Object.values(matchesMap);
+      const matches: MatchWithResult[] = Object.values(matchesMap);
 
-      resolve(matches as MatchAndResult[]);
+      resolve(matches as MatchWithResult[]);
     });
   });
 }
@@ -189,4 +189,45 @@ const updateMatchTeams = (matchId: number, teamIds: number[]): Promise<MatchTeam
   });
 }
 
-export { getMatchesAndPredictions, getAllMatches, updateMatchTeams};
+const insertOrUpdateMatchResult = (
+  matchId: number,
+  matchResult: MatchResult
+) => {
+  return new Promise<void>((resolve, reject) => {
+    db.beginTransaction(async (err) => {
+      if (err) { return reject(err); }
+
+      const updatePromises = matchResult.map((teamGoals) => {
+        return new Promise<void>((resolve, reject) => {
+          db.query(`
+            UPDATE juega
+            SET goles = ?
+            WHERE id_equipo = ?
+            AND id_partido = ?`,
+            [teamGoals.goals, teamGoals.teamId, matchId],
+            (err, result) => {
+              if (err) { return reject(err); }
+
+              resolve();
+            }
+          )
+        }).catch(reject);
+      });
+
+      Promise.all(updatePromises).then(() => {
+        db.commit(err => {
+          if (err) { return db.rollback(() => { reject(err); }); }
+
+          resolve();
+        }); }).catch(err => {
+          db.rollback(() => { reject(err); });
+        });
+    });
+  });
+}
+
+
+type MatchTeamResult = { teamId: number, goals: number };
+type MatchResult = [MatchTeamResult, MatchTeamResult];
+
+export { getMatchesAndPredictions, getAllMatches, updateMatchTeams, insertOrUpdateMatchResult};

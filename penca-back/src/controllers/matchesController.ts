@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
-import { getMatchesAndPredictions, getAllMatches, updateMatchTeams } from '../models/matchModel';
+import {
+  getMatchesAndPredictions,
+  getAllMatches,
+  updateMatchTeams,
+  insertOrUpdateMatchResult
+} from '../models/matchModel';
 
 const getMatchesAndUserPredictions = async (req: Request, res: Response) => {
   try {
@@ -38,4 +43,18 @@ const updateTeamsForMatch = async (req: Request, res: Response) => {
   }
 };
 
-export { getMatchesAndUserPredictions, getMatches, updateTeamsForMatch };
+const updateMatchResult = async (req: Request, res: Response) => {
+  try {
+    const matchId = Number(req.params.matchId);
+    const { result } = req.body;
+
+    await insertOrUpdateMatchResult(matchId, result);
+
+    res.status(200).json({ result });
+  }
+  catch (err) {
+    res.status(500).json({ error: 'Database Error' });
+  }
+}
+
+export { getMatchesAndUserPredictions, getMatches, updateTeamsForMatch, updateMatchResult };

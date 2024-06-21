@@ -136,23 +136,13 @@ export class MatchesService extends ApiService {
     );
   }
 
-  uploadResult(matchId: number, result: MatchResult): Observable<boolean> {
-    let matchIndex = _playedMatches.findIndex((match) => match.id == matchId);
-
-    if (matchIndex >= 0) {
-      _playedMatches[matchIndex].resultado = result;
-      return of(true);
-    }
-
-    matchIndex = _upcomingMatches.findIndex((match) => match.id == matchId);
-    if (matchIndex >= 0) {
-      const updated = new PlayedMatch({ ..._upcomingMatches[matchIndex], resultado: result });
-      _upcomingMatches.splice(matchIndex, 1);
-      _playedMatches.push(updated);
-      return of(true);
-    }
-
-    return of(false);
+  uploadResult(matchId: number, data: MatchResultModel): Observable<boolean> {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.put<{ result: MatchResultModel } | ApiError>(`${apiUrl}/matches/${matchId}/result`, data)
+      }),
+      map((response) => !('error' in response))
+    );
   }
 }
 
@@ -176,6 +166,14 @@ interface MatchPredictionsModel {
   predictions: [
     { teamId: number, goalsPredict: number },
     { teamId: number, goalsPredict: number }
+  ]
+}
+
+
+interface MatchResultModel {
+  result: [
+    { teamId: number, goals: number },
+    { teamId: number, goals: number }
   ]
 }
 
