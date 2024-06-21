@@ -57,9 +57,16 @@ export class UploadResultComponent {
 
   uploadResult(match: Match) {
     const formValue = this.formGroup!.value;
-    const result: MatchResult = [ formValue.result1!, formValue.result2! ];
 
-    this.matchesService.uploadResult(match.id, result).pipe(
+    this.matchesService.uploadResult(
+      match.id,
+      {
+        result: [
+          { teamId: match.equipos[0].id, goals: formValue.result1! },
+          { teamId: match.equipos[1].id, goals: formValue.result2! }
+        ]
+      }
+    ).pipe(
       tap((success) => {
         if (success) {
           this.toastService.success('¡Resultado guardado!');
