@@ -13,8 +13,7 @@ export class AuthHelperService {
   }
 
   navigateToHome(): void {
-    let role;
-    if (!(role = this.getRole())) return;
+    let role = this.getRole();
 
     switch (role) {
       case 'admin':
@@ -23,6 +22,8 @@ export class AuthHelperService {
       case 'alumno':
         this.router.navigateByUrl('/matches');
         break;
+      case null:
+        this.navigateToLogin();
     }
   }
 

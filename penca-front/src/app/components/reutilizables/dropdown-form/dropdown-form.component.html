@@ -12,6 +12,6 @@
 
 <nb-list *ngIf="selectedTeam" style="max-height: 200px; overflow-y: auto;">
   <nb-list-item>
-    <nb-user [name]="selectedTeam.name" [picture]="selectedTeam.picture"></nb-user>
+    <nb-user [name]="selectedTeam.name" [picture]="selectedTeam.picture" [size]="size || 'medium'"></nb-user>
   </nb-list-item>
 </nb-list>

@@ -1,0 +1,49 @@
+<div class="row">
+    <ng-container *ngIf="matchesToBeDetermined$ | async as matches; else loadingCard">
+        <ng-container *ngIf="matches.length; else emptyCard">
+            <div class="col-md-3" *ngFor="let match of matches">
+                <nb-card>
+                    <nb-card-header class="pb-0">
+                        <p class="m-0">{{ match.fase }}</p>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <div class="card-resultado">
+                            <app-team-img [equipo]="dummyTeam.name"></app-team-img>
+                            <div class="container-btn-cargar">
+                                <button
+                                    nbButton
+                                    status="primary"
+                                    shape="round"
+                                    (click)="navDefinirEquipos(match)"
+                                >
+                                    Seleccionar
+                                </button>
+                            </div>
+                            <app-team-img [equipo]="dummyTeam.name"></app-team-img>
+                        </div>
+                    </nb-card-body>
+                    <nb-card-footer>
+                        <p>{{ match.datetime | date: "dd/MM/yyyy HH:mm" }}</p>
+                    </nb-card-footer>
+                </nb-card>
+            </div>
+        </ng-container>
+
+        <ng-template #emptyCard>
+            <nb-card class="info-card">
+                <nb-card-body>
+                    Ya se han definido los equipos de todos los partidos.
+                </nb-card-body>
+            </nb-card>
+        </ng-template>
+
+    </ng-container>
+
+    <ng-template #loadingCard>
+        <nb-card class="info-card">
+            <nb-card-body>
+                Cargando...
+            </nb-card-body>
+        </nb-card>
+    </ng-template>
+</div>

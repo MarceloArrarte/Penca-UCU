@@ -12,6 +12,8 @@ import { MatchesListAdminComponent } from './components/views/matches-list-admin
 import { PlayedMatchesListAdminComponent } from './components/views/matches-list-admin/played-matches-list-admin/played-matches-list-admin.component';
 import { PendingMatchesListAdminComponent } from './components/views/matches-list-admin/pending-matches-list-admin/pending-matches-list-admin.component';
 import { PlayerRankingComponent } from './components/views/player-ranking/player-ranking.component';
+import { MatchesToBeDeterminedListComponent } from './components/views/matches-to-be-determined-list/matches-to-be-determined-list.component';
+import { DefineMatchTeamsComponent } from './components/views/matches-to-be-determined-list/define-match-teams/define-match-teams.component';
 
 const routes: Routes = [
   {
@@ -51,6 +53,18 @@ const routes: Routes = [
   {
     path: 'admin/matches/:id/result',
     component: UploadResultComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'admin' },
+  },
+  {
+    path: 'admin/matches/to-be-determined',
+    component: MatchesToBeDeterminedListComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'admin' },
+  },
+  {
+    path: 'admin/matches/define-teams',
+    component: DefineMatchTeamsComponent,
     canActivate: [RoleGuard],
     data: { expectedRole: 'admin' },
   },

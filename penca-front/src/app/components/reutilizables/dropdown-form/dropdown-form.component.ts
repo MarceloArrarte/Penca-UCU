@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { NbComponentSize } from '@nebular/theme';
 import { Observable } from 'rxjs';
 import { IEquipo } from 'src/app/classes/equipo.model';
 
@@ -11,6 +12,7 @@ import { IEquipo } from 'src/app/classes/equipo.model';
 export class DropdownFormComponent implements OnInit {
   @Input('teams') teams$!: Observable<IEquipo[]>;
   @Input() selectedTeam: IEquipo | null = null;
+  @Input() size?: NbComponentSize;
   @Output() selectedTeamChange = new EventEmitter<IEquipo>();
 
   ngOnInit(): void {

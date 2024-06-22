@@ -3,7 +3,8 @@ import {
   getMatchesAndPredictions,
   getAllMatches,
   updateMatchTeams,
-  insertOrUpdateMatchResult
+  insertOrUpdateMatchResult,
+  getAllMatchesToBeDetermined
 } from '../models/matchModel';
 
 const getMatchesAndUserPredictions = async (req: Request, res: Response) => {
@@ -56,4 +57,14 @@ const updateMatchResult = async (req: Request, res: Response) => {
   }
 }
 
-export { getMatchesAndUserPredictions, getMatches, updateTeamsForMatch, updateMatchResult };
+const getMatchesToBeDetermined = async (req: Request, res: Response) => {
+  try {
+    const matchs = await getAllMatchesToBeDetermined();
+
+    res.status(200).json(matchs);
+  } catch (err) {
+    res.status(500).json({ error: 'Database Error' });
+  }
+}
+
+export { getMatchesAndUserPredictions, getMatches, updateTeamsForMatch, updateMatchResult, getMatchesToBeDetermined };

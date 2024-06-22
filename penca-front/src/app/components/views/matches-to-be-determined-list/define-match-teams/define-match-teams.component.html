@@ -1,0 +1,34 @@
+<ng-container *ngIf="matchData">
+    <h2>{{ matchData.fase }} <span>({{ matchData.datetime | date: "dd/MM/yyyy HH:mm" }})</span></h2>
+
+    <form class="mt-4">
+        <div class="input-group mb-5">
+          <label for="campeon" class="d-block w-100 mb-2">Primer equipo</label>
+          <app-dropdown-form
+            [teams]="unselectedTeams$"
+            [(selectedTeam)]="firstTeam"
+            (selectedTeamChange)="onFirstTeamChange($event)"
+            [size]="'giant'">
+          </app-dropdown-form>
+        </div>
+    
+        <div class="input-group mb-5">
+          <label for="sub-campeon" class="d-block w-100 mb-2">Segundo equipo</label>
+          <app-dropdown-form
+            [teams]="unselectedTeams$"
+            [(selectedTeam)]="secondTeam"
+            (selectedTeamChange)="onFirstTeamChange($event)"
+            [size]="'giant'">
+          </app-dropdown-form>
+        </div>
+    
+        <div class="action-buttons d-flex justify-content-around mt-auto mb-5">
+            <button nbButton class="py-3" status="danger" shape="semi-round" (click)="navigateBack()">
+                Cancelar
+            </button>
+            <button nbButton class="py-3" status="success" shape="semi-round" (click)="sendTeamDefinition()">
+                Confirmar
+            </button>
+        </div>
+    </form>
+</ng-container>

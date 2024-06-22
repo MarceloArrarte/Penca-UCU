@@ -27,11 +27,11 @@ export class SignUpComponent {
   }
 
   onCampeonChange(selectedTeam: IEquipo) {
-    this.teamSelectorService.selectCampeon(selectedTeam);
+    this.teamSelectorService.selectFirst(selectedTeam);
   }
 
   onSubCampeonChange(selectedTeam: IEquipo) {
-    this.teamSelectorService.selectSubCampeon(selectedTeam);
+    this.teamSelectorService.selectSecond(selectedTeam);
   }
 
   signUp() {
