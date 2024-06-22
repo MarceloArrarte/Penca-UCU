@@ -234,7 +234,7 @@ type MatchResult = [MatchTeamResult, MatchTeamResult];
 const getAllMatchesToBeDetermined = (): Promise<Omit<MatchWithResult, 'teams'>[]> => {
   return new Promise((resolve, reject) => {
     db.query(`
-      SELECT p.id, p.fecha_hora, p.nombre_fase
+      SELECT p.id, p.fecha_hora AS datetime, p.nombre_fase AS fase
       FROM partido p
       LEFT JOIN juega j ON j.id_partido = p.id
       WHERE id_partido IS NULL;`,

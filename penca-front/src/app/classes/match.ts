@@ -76,3 +76,9 @@ export type MatchTeams = [
 export type MatchPrediction = MatchResult;
 
 export type MatchResult = [number, number];
+
+export type MatchToBeDetermined = {
+  id: number;
+  datetime: Date;
+  fase: string;
+}

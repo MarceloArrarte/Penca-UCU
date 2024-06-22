@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthHelperService } from 'src/app/services/auth-helper.service';
 
 @Component({
   selector: 'app-bottom-nav',
@@ -8,9 +9,14 @@ import { Router } from '@angular/router';
 })
 export class BottomNavComponent {
 
-  constructor(private router: Router) {}
+
+  constructor(private router: Router, private authHelper: AuthHelperService) {}
+
+  get isAdmin(): boolean {
+    return this.authHelper.getRole() == 'admin';
+  }
 
   onNavigate(path: string) {
-    this.router.navigate([`/${path}`]);
+    this.router.navigateByUrl(`${path}`);
   }
 }

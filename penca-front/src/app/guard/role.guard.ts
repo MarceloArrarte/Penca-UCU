@@ -17,10 +17,16 @@ export class RoleGuard implements CanActivate {
     const expectedRole = route.data['expectedRole'];
     const currentRole = this.authHelper.getRole();
 
-    if (!this.authHelper.isAuthenticated() || currentRole !== expectedRole) {
-      this.router.navigate(['login']);
+    if (!this.authHelper.isAuthenticated()) {
+      this.authHelper.navigateToLogin();
       return false;
     }
+
+    if (currentRole !== expectedRole) {
+      this.authHelper.navigateToHome();
+      return false;
+    }
+
     return true;
   }
 }

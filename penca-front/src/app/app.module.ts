@@ -27,6 +27,8 @@ import { ErrorHandlerInterceptor } from './interceptors/error-handler.intercepto
 import { AuthTokenInterceptor } from './interceptors/auth-token.interceptor';
 import { PlayerRankingComponent } from './components/views/player-ranking/player-ranking.component';
 import { BottomNavComponent } from './components/views/bottom-nav/bottom-nav.component';
+import { MatchesToBeDeterminedListComponent } from './components/views/matches-to-be-determined-list/matches-to-be-determined-list.component';
+import { DefineMatchTeamsComponent } from './components/views/matches-to-be-determined-list/define-match-teams/define-match-teams.component';
 
 const nebularModules = [
   NbThemeModule.forRoot({ name: 'dark' }),
@@ -64,7 +66,9 @@ const nebularModules = [
     PlayedMatchesListAdminComponent,
     PlayedMatchesListAdminComponent,
     PlayerRankingComponent,
-    BottomNavComponent
+    BottomNavComponent,
+    MatchesToBeDeterminedListComponent,
+    DefineMatchTeamsComponent
   ],
   imports: [
     BrowserModule,

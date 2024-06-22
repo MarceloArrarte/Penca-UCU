@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Match, MatchPrediction, MatchResult, MatchTeams, PlayedMatch } from '../classes/match';
+import { Match, MatchPrediction, MatchResult, MatchTeams, MatchToBeDetermined, PlayedMatch } from '../classes/match';
 import { Observable, map, mergeMap, of, switchMap, tap, throwError } from 'rxjs';
 import { ApiRepresentation } from '../utils/types';
 import { isPast } from 'date-fns';
@@ -94,6 +94,25 @@ export class MatchesService extends ApiService {
         })
       }));
   }
+
+
+  getMatchesToBeDetermined(): Observable<MatchToBeDetermined[]> {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.get<MatchToBeDetermined[] | ApiError>(`${apiUrl}/matches/toBeDetermined`).pipe(
+          switchMap((response) => {
+            if ('error' in response) {
+              return throwError(() => response.error);
+            }
+            else {
+              return of(response);
+            }
+          })
+        );
+      })
+    );
+  }
+
 
   getPlayedMatches(): Observable<PlayedMatch[]> {
 
