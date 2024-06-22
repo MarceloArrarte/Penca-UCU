@@ -27,23 +27,21 @@ nb-card {
       border-bottom: 1px solid #444;
       font-size: 1.3rem;
 
-
-      .name {
-        color: green;
-        margin-right: 1rem;
+      &:last-child {
+        border-bottom: none;
       }
+
+      &.highlight {
+        color: lightgreen;
+      }
+      
       .rank {
         margin-right: 1rem;
       }
 
       .score {
-        color: #ffffff;
         text-align: right;
       }
-    }
-
-    nb-list-item:last-child {
-      border-bottom: none;
     }
   }
 }
