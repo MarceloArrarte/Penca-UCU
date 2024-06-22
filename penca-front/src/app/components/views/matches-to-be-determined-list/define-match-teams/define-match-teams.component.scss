@@ -1,0 +1,59 @@
+app-team-img, app-up-down-input {
+    display: inline-block;
+    width: 40%;
+}
+
+:host ::ng-deep {
+    app-team-img p {
+        font-size: 200% !important;
+        margin-top: 2rem !important;
+    }
+
+    app-dropdown-form {
+        width: 100%;
+        
+        nb-list {
+            overflow: hidden;
+            overflow-y: initial !important;
+
+            nb-list-item {
+                margin-top: 2rem;
+                justify-content: center;
+                padding: 0;
+                // transform: scale(1.4);
+            }
+        }
+    }
+}
+
+app-up-down-input {
+    width: 60%;
+    font-size: 160% !important;
+
+    &::ng-deep > div {
+        padding-bottom: 20%;
+    } 
+}
+
+.action-buttons {
+    font-size: 120%;
+    margin-top: 60% !important;
+}
+
+h2 {
+    font-size: 130%;
+
+    span {
+        font-size: 80%;
+        font-weight: 300;
+        font-style: italic;
+        display: inline-block;
+        margin-left: .5rem;
+    }
+}
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}

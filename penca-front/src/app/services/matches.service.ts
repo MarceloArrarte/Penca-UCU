@@ -163,6 +163,15 @@ export class MatchesService extends ApiService {
       map((response) => !('error' in response))
     );
   }
+
+  sendTeamDefinition(matchId: number, data: TeamDefinitionModel): Observable<boolean> {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.put<{ matchId: number, teamIds: [number, number] } | ApiError>(`${apiUrl}/matchTeams/${matchId}`, data)
+      }),
+      map((response) => !('error' in response))
+    );
+  }
 }
 
 
@@ -194,6 +203,11 @@ interface MatchResultModel {
     { teamId: number, goals: number },
     { teamId: number, goals: number }
   ]
+}
+
+
+interface TeamDefinitionModel {
+  teamIds: [number, number]
 }
 
 

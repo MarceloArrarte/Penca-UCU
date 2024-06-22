@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatchTeams, MatchToBeDetermined } from 'src/app/classes/match';
 import { MainTitleService } from 'src/app/services/main-title.service';
@@ -16,12 +17,12 @@ export class MatchesToBeDeterminedListComponent {
     name: 'Por definirse'
   };
 
-  constructor(mainTitleService: MainTitleService, matchesService: MatchesService) {
+  constructor(mainTitleService: MainTitleService, matchesService: MatchesService, private router: Router) {
     mainTitleService.title$.next('Definición de equipos')
     this.matchesToBeDetermined$ = matchesService.getMatchesToBeDetermined();
   }
 
   navDefinirEquipos(match: MatchToBeDetermined) {
-    alert('llega')
+    this.router.navigateByUrl('/admin/matches/define-teams', { state: { match }})
   }
 }

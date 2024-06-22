@@ -69,13 +69,23 @@ app-team-img {
     }
 }
 
+nb-card-header {
+    border: none;
+
+    p {
+        font-size: 120%;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+}
+
 nb-card-footer {
     padding: .5rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     p {
-        font-size: 80%;
+        font-size: 90%;
         display: inline-block;
         margin: 0;
     }
