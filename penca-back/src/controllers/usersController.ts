@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAllUsers, getUserByEmail, createUser, getUserByEmailOrDocument } from '../models/userModel';
+import { getAllUserScores, getUserByEmail, createUser, getUserByEmailOrDocument } from '../models/userModel';
 
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -11,7 +11,7 @@ const secretKey = process.env.JWT_SECRET || 'your_default_secret_key'
 
 const getUsersRanking = async (req: Request, res: Response) => {
   try {
-    const users = await getAllUsers();
+    const users = await getAllUserScores();
 
     res.json(users);
   } catch (err) {

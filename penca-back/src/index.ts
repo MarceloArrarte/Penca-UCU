@@ -7,10 +7,8 @@ import matchRoutes from './routes/matchRoutes';
 import predictRoutes from './routes/predictionRoutes';
 import teamRoutes from './routes/teamRoutes';
 import morgan from 'morgan';
-import jwt, { JwtPayload } from 'jsonwebtoken';
 
 dotenv.config();
-const secretJwtKey = process.env.JWT_SECRET || 'your_default_secret_key'
 
 const app: Application = express();
 const port = process.env.BACKEND_PORT || 8000;
@@ -25,27 +23,6 @@ app.use(cors({
 
 app.use(morgan('combined'));
 app.use(express.json());
-
-app.use(async (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  
-  if (authHeader && /Bearer [^ ]+/.test(authHeader)) {
-    const token = authHeader.split('Bearer ')[1];
-
-    res.locals.auth = await new Promise((resolve, reject) => {
-      jwt.verify(token, secretJwtKey, (err, decoded) => {
-        if (!err) {
-          resolve(decoded);
-        }
-        else {
-          resolve(undefined)
-        }
-      });
-    });
-  }
-  
-  next();
-});
 
 app.use('/api', userRoutes);
 app.use('/api', matchRoutes);
