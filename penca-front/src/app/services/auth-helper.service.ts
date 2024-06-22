@@ -39,14 +39,25 @@ export class AuthHelperService {
     localStorage.removeItem('token');
   }
 
-  getRole(): 'alumno' | 'admin' | null {
+  private decodeToken(): TokenData | null {
     const token = this.getToken();
+
     if (token) {
       const payload = atob(token.split('.')[1]);
-      const parsedPayload = JSON.parse(payload);
-      return parsedPayload.role;
+      const parsedPayload = JSON.parse(payload) as TokenData;
+      return parsedPayload;
     }
-    return null;
+    else {
+      return null;
+    }
+  }
+
+  getRole(): 'alumno' | 'admin' | null {
+    return this.decodeToken()?.role ?? null;
+  }
+
+  getDocument(): string | null {
+    return this.decodeToken()?.document ?? null;
   }
 
   isAuthenticated(): boolean {
@@ -54,3 +65,12 @@ export class AuthHelperService {
     return !!token;
   }
 }
+
+
+interface TokenData {
+  document: string;
+  email: string;
+  role: UserRole;
+}
+
+type UserRole = 'admin' | 'alumno';

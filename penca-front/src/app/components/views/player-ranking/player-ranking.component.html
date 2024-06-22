@@ -1,15 +1,18 @@
-<div class="player-list-container">
-    <nb-card>
-      <nb-card-body>
-        <nb-list>
-          <nb-list-item *ngFor="let player of players" [class.highlight]="player.rank === 6">
-            <span class="rank">{{ player.rank }} -</span>
-            <div class="player-info">
-              <div class="player-name">{{ player.name }}</div>
-            </div>
-            <div class="score">{{ player.totalScore }} pts</div>
-          </nb-list-item>
-        </nb-list>
-      </nb-card-body>
-    </nb-card>
-  </div>
+<div class="player-list-container" *ngIf="users$ | async as users">
+  <nb-card>
+    <nb-card-body class="pt-0">
+      <nb-list>
+        <nb-list-item
+          *ngFor="let user of users; index as i"
+          [class.highlight]="user.userDocument == currentUserDocument"
+        >
+          <span class="rank">{{ i + 1 }}° -</span>
+          <div class="player-info">
+            <div class="player-name">{{ user.name }}</div>
+          </div>
+          <div class="score">{{ user.score }} pts</div>
+        </nb-list-item>
+      </nb-list>
+    </nb-card-body>
+  </nb-card>
+</div>
