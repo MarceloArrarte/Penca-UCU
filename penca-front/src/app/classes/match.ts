@@ -34,6 +34,8 @@ export class Match {
   }
 }
 
+
+
 export class PlayedMatch extends Match {
   resultado: MatchResult;
 
@@ -57,8 +59,14 @@ export class PlayedMatch extends Match {
 
   isCorrectPrediction(): this is PlayedMatch & { prediccion: MatchPrediction }  {
     return !!this.prediccion && !this.isExactPrediction()
-      && ((this.prediccion[0] > this.prediccion[1] && this.resultado[0] > this.resultado[1])
-      || (this.prediccion[1] > this.prediccion[0] && this.resultado[1] > this.resultado[0]));
+      && (
+        // Gana el primero
+        (this.prediccion[0] > this.prediccion[1] && this.resultado[0] > this.resultado[1])
+        // Gana el segundo
+        || (this.prediccion[1] > this.prediccion[0] && this.resultado[1] > this.resultado[0])
+        // Empatan
+        || (this.prediccion[0] == this.prediccion[1] && this.resultado[0] == this.resultado[1])
+      );
   }
 
   isWrongPrediction(): this is PlayedMatch & { prediccion: MatchPrediction }  {
