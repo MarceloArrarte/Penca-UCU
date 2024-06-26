@@ -3,6 +3,7 @@ import { ApiError, ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Observable, of, switchMap, throwError } from 'rxjs';
+import { IEquipo } from '../classes/equipo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,40 @@ export class UsersService extends ApiService {
       })
     )
   }
+
+  getCareers(): Observable<string[]> {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.get<string[] | ApiError>(`${apiUrl}/careers`).pipe(
+          switchMap((response) => {
+            if ('error' in response) {
+              return throwError(() => response.error);
+            }
+            else {
+              return of(response);
+            }
+          })
+        );
+      })
+    );
+  }
+
+  getProfile(): Observable<UserProfile> {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.get<UserProfile | ApiError>(`${apiUrl}/profile`).pipe(
+          switchMap((response) => {
+            if ('error' in response) {
+              return throwError(() => response.error);
+            }
+            else {
+              return of(response);
+            }
+          })
+        );
+      })
+    );
+  }
 }
 
 export interface UserScore {
@@ -36,3 +71,12 @@ export interface UserScore {
   name: string;
   score: number;
 } 
+
+export interface UserProfile {
+  name: string;
+  email: string;
+  score: number;
+  campeon: IEquipo;
+  subcampeon: IEquipo;
+  carreras: string[];
+}

@@ -3,7 +3,7 @@
   [(ngModel)]="selectedTeam"
   (ngModelChange)="onTeamChange($event)"
   name="selectedTeam"
-  style="width: 100%;"
+  [fullWidth]="true"
 >
   <nb-option *ngFor="let team of teams$ | async" [value]="team">
     {{ team.name }}
