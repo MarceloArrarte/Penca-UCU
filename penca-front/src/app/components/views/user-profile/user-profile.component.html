@@ -1,1 +1,44 @@
-<p>{{ profile$ | async | json }}</p>
+<nb-card *ngIf="profile$ | async as profile">
+    <nb-card-body class="d-flex flex-column">
+        <div class="d-flex personal-info-container">
+            <nb-icon icon="person-outline"></nb-icon>
+            <div class="d-flex flex-column mt-3">
+                <p>{{ profile.name }}</p>
+                <p class="small-font-size">{{ profile.email }}</p>
+            </div>
+        </div>
+
+        <div *ngIf="profile.score || profile.score === 0" class="d-flex justify-content-between profile-attribute">
+            <p class="w-50">Puntaje:</p>
+            <p class="w-50 my-3">{{ profile.score }} punto(s)</p>
+        </div>
+        <div *ngIf="profile.campeon" class="d-flex justify-content-between profile-attribute">
+            <p class="w-50">Campeón:</p>
+            <div class="w-50 d-flex">
+                <img class="d-inline-block imagen-equipo" [src]="profile.campeon.picture" [alt]="profile.campeon.name">
+                <p>{{ profile.campeon.name }}</p>
+            </div>
+        </div>
+        <div *ngIf="profile.subcampeon" class="d-flex justify-content-between profile-attribute">
+            <p class="w-50">Subcampeón:</p>
+            <div class="w-50 d-flex">
+                <img class="d-inline-block imagen-equipo" [src]="profile.subcampeon.picture" [alt]="profile.subcampeon.name">
+                <p>{{ profile.subcampeon.name }}</p>
+            </div>
+        </div>
+        <div *ngIf="profile.careers" class="d-flex flex-column profile-attribute">
+            <p class="w-100">Carreras:</p>
+            <nb-tag-list>
+                <nb-tag *ngFor="let carrera of profile.careers" [text]="carrera" [removable]="false"></nb-tag>
+            </nb-tag-list>
+        </div>
+
+        <div class="d-flex flex-column align-content-center mt-5">
+            <button nbButton class="py-3" status="danger" shape="semi-round" (click)="logout()">
+                Cerrar sesión
+            </button>
+        </div>
+
+
+    </nb-card-body>
+</nb-card>

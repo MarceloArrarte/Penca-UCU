@@ -51,13 +51,24 @@ export class UsersService extends ApiService {
   getProfile(): Observable<UserProfile> {
     return this.apiUrl$.pipe(
       switchMap((apiUrl) => {
-        return this.http.get<UserProfile | ApiError>(`${apiUrl}/profile`).pipe(
+        return this.http.get<UserProfileModel | ApiError>(`${apiUrl}/profile`).pipe(
           switchMap((response) => {
             if ('error' in response) {
               return throwError(() => response.error);
             }
             else {
-              return of(response);
+              return of({
+                name: response.nombre,
+                email: response.email,
+                score: response.score,
+                campeon: response.campeon
+                  ? { name: response.campeon, picture: `assets/equipos/${response.campeon.replaceAll(' ', '_')}.png` } as IEquipo
+                  : null,
+                subcampeon: response.subcampeon
+                  ? { name: response.subcampeon, picture: `assets/equipos/${response.subcampeon.replaceAll(' ', '_')}.png` } as IEquipo
+                  : null,
+                careers: response.careers
+              });
             }
           })
         );
@@ -75,8 +86,17 @@ export interface UserScore {
 export interface UserProfile {
   name: string;
   email: string;
-  score: number;
-  campeon: IEquipo;
-  subcampeon: IEquipo;
-  carreras: string[];
+  score: number | null;
+  campeon: IEquipo | null;
+  subcampeon: IEquipo | null;
+  careers: string[] | null;
+}
+
+export interface UserProfileModel {
+  nombre: string;
+  email: string;
+  score: number | null;
+  campeon: string | null;
+  subcampeon: string | null;
+  careers: string[] | null;
 }

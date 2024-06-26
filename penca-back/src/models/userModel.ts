@@ -243,6 +243,7 @@ const getProfile = (document: string): Promise<UserProfile> => {
     db.query(
      `SELECT
         u.documento,
+        u.nombre,
         u.email,
         a.id_campeon,
         a.campeon,
@@ -271,7 +272,7 @@ const getProfile = (document: string): Promise<UserProfile> => {
         if (err) { return reject(err); }
 
         const basicProfile: Omit<UserProfile, 'score' | 'carreras'> & { id_campeon: number, id_subcampeon: number } = (result as RowDataPacket[])[0] as Omit<UserProfile, 'score' | 'carreras'> & { id_campeon: number, id_subcampeon: number };
-        if (basicProfile.role = 'alumno') {
+        if (basicProfile.role == 'alumno') {
           const careers = await new Promise<string[]>((resolve, reject) => {
             db.query(
               'SELECT nombre_carrera FROM cursa WHERE documento_alumno = ?;',
@@ -390,6 +391,7 @@ const getProfile = (document: string): Promise<UserProfile> => {
 type UserProfile = {
   documento: string,
   email: string,
+  nombre: string,
   role: UserRole,
   score?: number | null,
   campeon: string | null,

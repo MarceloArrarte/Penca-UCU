@@ -8,7 +8,8 @@ import { NbThemeModule, NbLayoutModule, NbTabsetModule, NbRouteTabsetModule, NbC
    NbListModule, NbSelectModule, NbButtonModule, NbInputModule, NbToastrModule,
    NbUserModule, NbActionsModule,
    NbDialogModule,
-   NbTagModule} from '@nebular/theme';
+   NbTagModule,
+   NbIconModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { MatchesListComponent } from './components/views/matches-list/matches-list.component';
 import { UpcomingMatchesListComponent } from './components/views/matches-list/upcoming-matches-list/upcoming-matches-list.component';
@@ -40,6 +41,7 @@ const nebularModules = [
   NbCardModule,
   NbDialogModule.forRoot(),
   NbEvaIconsModule,
+  NbIconModule,
   NbInputModule,
   NbLayoutModule,
   NbRouteTabsetModule,

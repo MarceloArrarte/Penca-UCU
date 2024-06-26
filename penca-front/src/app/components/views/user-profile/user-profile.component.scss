@@ -1,0 +1,40 @@
+.imagen-equipo {
+    max-height: 100%;
+
+    + p {
+        margin: 1rem;
+    }
+}
+
+.profile-attribute {
+    height: 3rem;
+    margin-bottom: 2rem;
+
+    > :first-child {
+        margin: 1rem 0rem;
+    }
+}
+
+nb-icon {
+    width: 200%;
+    height: 200%;
+}
+
+p {
+    display: inline-block;
+    margin: 0;
+
+    &:not(.small-font-size) {
+        font-size: 140%;
+    }
+}
+
+.personal-info-container {
+    p {
+        line-height: 120%;
+    }
+
+    > :first-child {
+        padding: 1rem;
+    }
+}
