@@ -10,12 +10,15 @@ import morgan from 'morgan';
 
 dotenv.config();
 
+import './crons/upcoming-match-notification-generator';
+import './crons/notification-sender';
+
 const app: Application = express();
 const port = process.env.BACKEND_PORT || 8000;
 
 app.use(cors({
   origin: (() => {
-    let origin = `http://localhost:${process.env.FRONTEND_PORT}`;
+    let origin = process.env.FRONTEND_URL;
     console.log(`Origin habilitado: ${origin}`);
     return origin;
   })()

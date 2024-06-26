@@ -210,4 +210,6 @@ const createUser = (document: string, name: string, email: string, hashedPasswor
   });
 };
 
+
+
 export { getAllUserScores, getUserByEmail, createUser, getUserByEmailOrDocument, User };

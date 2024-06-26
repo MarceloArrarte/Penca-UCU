@@ -52,6 +52,47 @@ export class MatchesService extends ApiService {
     );
   }
 
+  getSingleMatch(id: number): Observable<Match> {
+    return this.apiUrl$.pipe(
+      switchMap((apiUrl) => {
+        return this.http.get<MatchModel | ApiError>(`${apiUrl}/matches/${id}`).pipe(
+          switchMap((response) => {
+            if ('error' in response) {
+              return throwError(() => response.error);
+            }
+            else {
+              return of(response);
+            }
+          })
+        );
+      }),
+      map<MatchModel, Match>((match) => {
+        const equipos = match.teams.map((team) => ({ id: team.idTeam, name: team.country})) as MatchTeams;
+        const predicciones = match.teams.map((team) => team.goalsPredict) as MatchPrediction;
+        const resultado = match.teams.map((team) => team.goals) as MatchResult;
+
+        if (resultado.some((x) => x)) {
+          return new PlayedMatch({
+            id: match.id,
+            datetime: new Date(match.date),
+            fase: match.phase,
+            equipos,
+            prediccion: predicciones.some((p) => p) ? predicciones : undefined,
+            resultado
+          });
+        }
+        else {
+          return new Match({
+            id: match.id,
+            datetime: new Date(match.date),
+            fase: match.phase,
+            equipos,
+            prediccion: predicciones.some((p) => p) ? predicciones : undefined
+          });
+        }
+      }));
+  }
+
   private getAllMatches() {
     return this.apiUrl$.pipe(
       switchMap((apiUrl) => {

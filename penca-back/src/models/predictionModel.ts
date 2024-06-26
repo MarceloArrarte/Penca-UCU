@@ -95,4 +95,51 @@ const predictTeamsGoalsForMatch = (userDocument: number, matchId: number, predic
   })
 }
 
-export { predictTeamsGoalsForMatch }
+export type MissingPredictionNotificationData = {
+  documento: string,
+  nombre: string,
+  id_partido: number,
+  fecha_hora: Date,
+  fase: string,
+  equipos: string
+}
+
+const getUsersMissingPredictions = (): Promise<MissingPredictionNotificationData[]> => {
+  return new Promise(async (resolve, reject) => {
+    db.query(
+     `SELECT u.documento, u.nombre, t1.*
+      FROM usuario u
+      INNER JOIN alumno a ON a.documento_usuario = u.documento
+      CROSS JOIN (
+        SELECT p.id AS id_partido, p.fecha_hora, p.nombre_fase AS fase, t2.equipos
+        FROM partido p
+        INNER JOIN (
+          SELECT p.id, GROUP_CONCAT(e.pais SEPARATOR ' - ') AS equipos
+          FROM partido p
+          INNER JOIN juega j ON j.id_partido = p.id
+          INNER JOIN equipo e ON e.id = j.id_equipo
+          WHERE p.fecha_hora > DATE_ADD(NOW(), INTERVAL 1 HOUR)
+          AND p.fecha_hora < DATE_ADD(NOW(), INTERVAL 1 DAY)
+          GROUP BY p.id
+        ) t2 ON t2.id = p.id
+      ) t1
+      LEFT JOIN predice p2 ON (
+        p2.id_partido = t1.id_partido
+        AND p2.documento_alumno = a.documento_usuario
+      )
+      LEFT JOIN notifica n ON (
+        n.id_partido = t1.id_partido
+        AND n.documento_alumno = a.documento_usuario
+      )
+      WHERE p2.documento_alumno IS NULL
+      AND n.documento_alumno IS NULL;`,
+      (err, result) => {
+        if (err) { return reject(err); }
+
+        resolve(result as MissingPredictionNotificationData[]);
+      }
+    )
+  });
+}
+
+export { predictTeamsGoalsForMatch , getUsersMissingPredictions }
