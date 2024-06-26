@@ -1,26 +1,26 @@
 -- Grupo A --
-INSERT INTO equipo (pais) VALUES ('Argentina');
-INSERT INTO equipo (pais) VALUES ('Perú');
-INSERT INTO equipo (pais) VALUES ('Chile');
-INSERT INTO equipo (pais) VALUES ('Canadá');
+INSERT INTO equipo (pais) VALUES ('Argentina', 'A');
+INSERT INTO equipo (pais) VALUES ('Perú', 'A');
+INSERT INTO equipo (pais) VALUES ('Chile', 'A');
+INSERT INTO equipo (pais) VALUES ('Canadá', 'A');
 
 -- Grupo B --
-INSERT INTO equipo (pais) VALUES ('México');
-INSERT INTO equipo (pais) VALUES ('Ecuador');
-INSERT INTO equipo (pais) VALUES ('Venezuela');
-INSERT INTO equipo (pais) VALUES ('Jamaica');
+INSERT INTO equipo (pais) VALUES ('México', 'B');
+INSERT INTO equipo (pais) VALUES ('Ecuador', 'B');
+INSERT INTO equipo (pais) VALUES ('Venezuela', 'B');
+INSERT INTO equipo (pais) VALUES ('Jamaica', 'B');
 
 -- Grupo C --
-INSERT INTO equipo (pais) VALUES ('Estados Unidos');
-INSERT INTO equipo (pais) VALUES ('Uruguay');
-INSERT INTO equipo (pais) VALUES ('Panamá');
-INSERT INTO equipo (pais) VALUES ('Bolivia');
+INSERT INTO equipo (pais) VALUES ('Estados Unidos', 'C');
+INSERT INTO equipo (pais) VALUES ('Uruguay', 'C');
+INSERT INTO equipo (pais) VALUES ('Panamá', 'C');
+INSERT INTO equipo (pais) VALUES ('Bolivia', 'C');
 
 -- Grupo D --
-INSERT INTO equipo (pais) VALUES ('Brasil');
-INSERT INTO equipo (pais) VALUES ('Colombia');
-INSERT INTO equipo (pais) VALUES ('Paraguay');
-INSERT INTO equipo (pais) VALUES ('Costa Rica');
+INSERT INTO equipo (pais) VALUES ('Brasil', 'D');
+INSERT INTO equipo (pais) VALUES ('Colombia', 'D');
+INSERT INTO equipo (pais) VALUES ('Paraguay', 'D');
+INSERT INTO equipo (pais) VALUES ('Costa Rica', 'D');
 
 -- Fases --
 INSERT INTO fase (nombre) VALUES ('Fase de grupos - Jornada 1');
@@ -176,3 +176,8 @@ INSERT INTO juega (id_equipo, id_partido, goles) VALUES (14, 23, null);
 -- Partido 24: Costa Rica vs Paraguay
 INSERT INTO juega (id_equipo, id_partido, goles) VALUES (16, 24, null);
 INSERT INTO juega (id_equipo, id_partido, goles) VALUES (15, 24, null);
+
+-- Usuario admin predeterminado (pass 1234)
+INSERT INTO usuario (documento, nombre, email, contraseña)
+VALUES ('12345678', 'Sr. Admin', 'admin@ucu.edu.uy', '$2a$10$06z.ZcR0pLcpZpS7L20z3O.FxbaPtO2RxgIjcMj1vgYMacG/RyoFG');
+INSERT INTO admin VALUES ('12345678');
