@@ -181,3 +181,6 @@ INSERT INTO juega (id_equipo, id_partido, goles) VALUES (15, 24, null);
 INSERT INTO usuario (documento, nombre, email, contraseña)
 VALUES ('12345678', 'Sr. Admin', 'admin@ucu.edu.uy', '$2a$10$06z.ZcR0pLcpZpS7L20z3O.FxbaPtO2RxgIjcMj1vgYMacG/RyoFG');
 INSERT INTO admin VALUES ('12345678');
+
+INSERT INTO carrera (nombre)
+VALUES ('Ing. Informática'), ('Ing. Industrial'), ('Psicología'), ('Administración de empresas'), ('Odontología');
