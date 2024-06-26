@@ -59,7 +59,7 @@ const getAllMatches = (): Promise<MatchWithResult[]> => {
 
         matchesMap[matchId].teams.push(
           {
-            idTeam: row.id_partido,
+            idTeam: row.id_equipo,
             country: row.pais,
             goals: row.goles
           } 

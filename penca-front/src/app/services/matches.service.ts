@@ -241,8 +241,8 @@ interface MatchPredictionsModel {
 
 interface MatchResultModel {
   result: [
-    { teamId: number, goals: number },
-    { teamId: number, goals: number }
+    { teamId: number, goals: number, penalesGoals?: number },
+    { teamId: number, goals: number, penalesGoals?: number }
   ]
 }
 
