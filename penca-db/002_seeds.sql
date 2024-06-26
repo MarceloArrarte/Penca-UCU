@@ -1,26 +1,26 @@
 -- Grupo A --
-INSERT INTO equipo (pais) VALUES ('Argentina', 'A');
-INSERT INTO equipo (pais) VALUES ('Perú', 'A');
-INSERT INTO equipo (pais) VALUES ('Chile', 'A');
-INSERT INTO equipo (pais) VALUES ('Canadá', 'A');
+INSERT INTO equipo (pais, grupo) VALUES ('Argentina', 'A');
+INSERT INTO equipo (pais, grupo) VALUES ('Perú', 'A');
+INSERT INTO equipo (pais, grupo) VALUES ('Chile', 'A');
+INSERT INTO equipo (pais, grupo) VALUES ('Canadá', 'A');
 
 -- Grupo B --
-INSERT INTO equipo (pais) VALUES ('México', 'B');
-INSERT INTO equipo (pais) VALUES ('Ecuador', 'B');
-INSERT INTO equipo (pais) VALUES ('Venezuela', 'B');
-INSERT INTO equipo (pais) VALUES ('Jamaica', 'B');
+INSERT INTO equipo (pais, grupo) VALUES ('México', 'B');
+INSERT INTO equipo (pais, grupo) VALUES ('Ecuador', 'B');
+INSERT INTO equipo (pais, grupo) VALUES ('Venezuela', 'B');
+INSERT INTO equipo (pais, grupo) VALUES ('Jamaica', 'B');
 
 -- Grupo C --
-INSERT INTO equipo (pais) VALUES ('Estados Unidos', 'C');
-INSERT INTO equipo (pais) VALUES ('Uruguay', 'C');
-INSERT INTO equipo (pais) VALUES ('Panamá', 'C');
-INSERT INTO equipo (pais) VALUES ('Bolivia', 'C');
+INSERT INTO equipo (pais, grupo) VALUES ('Estados Unidos', 'C');
+INSERT INTO equipo (pais, grupo) VALUES ('Uruguay', 'C');
+INSERT INTO equipo (pais, grupo) VALUES ('Panamá', 'C');
+INSERT INTO equipo (pais, grupo) VALUES ('Bolivia', 'C');
 
 -- Grupo D --
-INSERT INTO equipo (pais) VALUES ('Brasil', 'D');
-INSERT INTO equipo (pais) VALUES ('Colombia', 'D');
-INSERT INTO equipo (pais) VALUES ('Paraguay', 'D');
-INSERT INTO equipo (pais) VALUES ('Costa Rica', 'D');
+INSERT INTO equipo (pais, grupo) VALUES ('Brasil', 'D');
+INSERT INTO equipo (pais, grupo) VALUES ('Colombia', 'D');
+INSERT INTO equipo (pais, grupo) VALUES ('Paraguay', 'D');
+INSERT INTO equipo (pais, grupo) VALUES ('Costa Rica', 'D');
 
 -- Fases --
 INSERT INTO fase (nombre) VALUES ('Fase de grupos - Jornada 1');
