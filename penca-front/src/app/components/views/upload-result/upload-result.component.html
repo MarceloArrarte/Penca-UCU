@@ -13,8 +13,42 @@
         <button nbButton class="py-3" status="danger" shape="semi-round" (click)="navigateBack()">
             Cancelar
         </button>
-        <button nbButton class="py-3" status="success" shape="semi-round" (click)="uploadResult(matchData)">
+        <button nbButton class="py-3" status="success" shape="semi-round" (click)="confirm(matchData)">
             Confirmar
         </button>
     </div>
 </ng-container>
+
+
+<!-- PENALTI DIALOG -->
+ <ng-template #dialog>
+    <nb-card>
+        <nb-card-header>
+            <h4>¡Empate en la final! Ingresa el resultado de penales para definir al campeón:</h4>
+        </nb-card-header>
+
+        <nb-card-body>
+            <div class="row my-5">
+                <app-team-img [equipo]="matchData!.equipos[0].name"></app-team-img>
+                <app-up-down-input [control]="formGroup!.controls.penalti1!"></app-up-down-input>
+            </div>
+            <div class="row flex-row-reverse my-5">
+                <app-team-img [equipo]="matchData!.equipos[1].name"></app-team-img>
+                <app-up-down-input [control]="formGroup!.controls.penalti2!"></app-up-down-input>
+            </div>
+        </nb-card-body>
+
+        <nb-card-footer>
+            <div class="action-buttons d-flex justify-content-around mt-auto mb-5">
+                <button nbButton class="py-3" status="danger" shape="semi-round" (click)="closeDialog(false)">
+                    Cancelar
+                </button>
+                <button nbButton class="py-3" status="success" shape="semi-round" (click)="closeDialog(true)">
+                    Confirmar
+                </button>
+            </div>
+        </nb-card-footer>
+    </nb-card>
+
+
+ </ng-template>

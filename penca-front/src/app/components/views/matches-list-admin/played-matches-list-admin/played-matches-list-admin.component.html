@@ -22,6 +22,10 @@
                     <app-team-img [equipo]="match.equipos[1].name"></app-team-img>
                 </div>
             </nb-card-body>
+            <nb-card-footer>
+                <p>{{ match.datetime | date: "dd/MM/yyyy HH:mm" }}</p>
+                <p>{{ match.fase }}</p>
+            </nb-card-footer>
         </nb-card>
     </div>
 </div>

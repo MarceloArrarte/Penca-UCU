@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbThemeModule, NbLayoutModule, NbTabsetModule, NbRouteTabsetModule, NbCardModule,
    NbListModule, NbSelectModule, NbButtonModule, NbInputModule, NbToastrModule,
-   NbUserModule, NbActionsModule } from '@nebular/theme';
+   NbUserModule, NbActionsModule,
+   NbDialogModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { MatchesListComponent } from './components/views/matches-list/matches-list.component';
 import { UpcomingMatchesListComponent } from './components/views/matches-list/upcoming-matches-list/upcoming-matches-list.component';
@@ -35,6 +36,7 @@ const nebularModules = [
   NbActionsModule,
   NbButtonModule,
   NbCardModule,
+  NbDialogModule.forRoot(),
   NbEvaIconsModule,
   NbInputModule,
   NbLayoutModule,

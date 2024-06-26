@@ -57,3 +57,15 @@ app-team-img {
         font-size: 80%;
     }
 }
+
+nb-card-footer {
+    padding: .5rem;
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        font-size: 80%;
+        display: inline-block;
+        margin: 0;
+    }
+}

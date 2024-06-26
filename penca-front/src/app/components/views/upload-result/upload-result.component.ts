@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { Observable, catchError, combineLatest, filter, forkJoin, map, merge, of, switchMap, tap, throwError, withLatestFrom } from 'rxjs';
 import { Match, MatchPrediction, MatchResult, PlayedMatch } from 'src/app/classes/match';
 import { MainTitleService } from 'src/app/services/main-title.service';
@@ -20,15 +21,23 @@ export class UploadResultComponent {
 
   formGroup?: FormGroup<{
     result1: FormControl<number>,
-    result2: FormControl<number>
+    result2: FormControl<number>,
+    penalti1?: FormControl<number>,
+    penalti2?: FormControl<number>
   }>;
+
+
+  @ViewChild('dialog')
+  penaltiDialog!: TemplateRef<any>;
+  dialogRef?: NbDialogRef<any>;
 
   constructor(
     titleService: MainTitleService,
     private route: ActivatedRoute,
     private router: Router,
     private matchesService: MatchesService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private dialogService: NbDialogService
   ) {
     titleService.title$.next('Cargar resultado');
 
@@ -55,15 +64,44 @@ export class UploadResultComponent {
     });
   }
 
-  uploadResult(match: Match) {
+  closeDialog(confirmed: boolean) {
+    if (confirmed) {
+      const formValue = this.formGroup!.value;
+      this.dialogRef!.close([formValue.penalti1!, formValue.penalti2]);
+    }
+    else {
+      this.dialogRef!.close(null);
+    }
+  }
+
+  confirm(match: Match) {
+    const formValue = this.formGroup!.value;
+
+    if (match.fase.toLowerCase().includes('final') && formValue.result1 == formValue.result2) {
+      this.formGroup!.addControl('penalti1', new FormControl(0, { nonNullable: true }))
+      this.formGroup!.addControl('penalti2', new FormControl(0, { nonNullable: true }))
+
+      this.dialogRef = this.dialogService.open(this.penaltiDialog);
+      this.dialogRef.onClose.subscribe((penaltis: [number, number] | null) => {
+        if (penaltis) {
+          this.uploadResult(match, penaltis);
+        }
+      });
+    }
+    else {
+      this.uploadResult(match);
+    }
+  }
+
+  uploadResult(match: Match, penalesGoals?: [number, number]) {
     const formValue = this.formGroup!.value;
 
     this.matchesService.uploadResult(
       match.id,
       {
         result: [
-          { teamId: match.equipos[0].id, goals: formValue.result1! },
-          { teamId: match.equipos[1].id, goals: formValue.result2! }
+          { teamId: match.equipos[0].id, goals: formValue.result1!, penalesGoals: penalesGoals?.[0] },
+          { teamId: match.equipos[1].id, goals: formValue.result2!, penalesGoals: penalesGoals?.[1] }
         ]
       }
     ).pipe(
