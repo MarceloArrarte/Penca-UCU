@@ -63,4 +63,5 @@ interface SignUpModel {
   password: string;
   championId: number;
   runnerUpId: number;
+  careers: string[];
 }

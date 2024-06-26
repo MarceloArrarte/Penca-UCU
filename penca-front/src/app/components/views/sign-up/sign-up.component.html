@@ -53,6 +53,20 @@
               name="contrasena"
             />
           </div>
+          <div class="input-group mb-3">
+            <label for="carreras">Carreras que cursás</label>
+            <nb-select multiple placeholder="Seleccionar..." [(selected)]="carrerasSeleccionadas" class="mb-2" [fullWidth]="true">
+              <nb-option
+                *ngFor="let carrera of carreras$ | async"
+                [value]="carrera"
+              >
+                {{ carrera }}
+              </nb-option>
+            </nb-select>
+            <nb-tag-list>
+              <nb-tag *ngFor="let carrera of carrerasSeleccionadas" [text]="carrera" [removable]="false"></nb-tag>
+            </nb-tag-list>
+          </div>
 
           <div class="input-group mb-3">
             <label for="campeon">Campeón</label>

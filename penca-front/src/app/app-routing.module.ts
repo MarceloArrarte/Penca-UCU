@@ -14,6 +14,7 @@ import { PendingMatchesListAdminComponent } from './components/views/matches-lis
 import { PlayerRankingComponent } from './components/views/player-ranking/player-ranking.component';
 import { MatchesToBeDeterminedListComponent } from './components/views/matches-to-be-determined-list/matches-to-be-determined-list.component';
 import { DefineMatchTeamsComponent } from './components/views/matches-to-be-determined-list/define-match-teams/define-match-teams.component';
+import { UserProfileComponent } from './components/views/user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,18 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: { expectedRole: 'alumno' },
     title: 'Ranking',
+  },
+  {
+    path: 'profile',
+    component: UserProfileComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'alumno' },
+  },
+  {
+    path: 'admin/profile',
+    component: UserProfileComponent,
+    canActivate: [RoleGuard],
+    data: { expectedRole: 'admin' },
   },
   {
     path: 'admin/matches/:id/result',

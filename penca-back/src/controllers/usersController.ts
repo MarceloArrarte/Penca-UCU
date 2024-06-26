@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAllUserScores, getUserByEmail, createUser, getUserByEmailOrDocument } from '../models/userModel';
+import { getAllUserScores, getUserByEmail, createUser, getUserByEmailOrDocument, getCareers, getProfile } from '../models/userModel';
 
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -20,7 +20,7 @@ const getUsersRanking = async (req: Request, res: Response) => {
 };
 
 const registerUser = async (req: Request, res: Response) => {
-  const { document, name, email, password, championId, runnerUpId } = req.body;
+  const { document, name, email, password, championId, runnerUpId, careers } = req.body;
 
   try {
     const user = await getUserByEmailOrDocument(email, document);
@@ -29,7 +29,7 @@ const registerUser = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await createUser(document, name, email, hashedPassword, championId, runnerUpId);
+    await createUser(document, name, email, hashedPassword, championId, runnerUpId, careers);
 
     res.status(201).json({ message: 'User created successfully' });
   } catch (err) {
@@ -61,4 +61,27 @@ const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsersRanking, loginUser, registerUser };
+const getAllCareers = async (req: Request, res: Response) => {
+  try {
+    const careers = await getCareers();
+
+    res.json(careers);
+  } catch (err) {
+    res.status(500).json({ error: 'Database Error' });
+  }
+}
+
+const getUserProfile = async (req: Request, res: Response) => {
+  const userDocument = req.user!.document.toString();
+
+  try {
+    const careers = await getProfile(userDocument);
+
+    res.json(careers);
+  } catch (err) {
+    res.status(500).json({ error: 'Database Error' });
+  }
+}
+
+
+export { getUsersRanking, loginUser, registerUser, getAllCareers, getUserProfile };
