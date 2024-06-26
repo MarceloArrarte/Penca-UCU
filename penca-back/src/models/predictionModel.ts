@@ -127,7 +127,12 @@ const getUsersMissingPredictions = (): Promise<MissingPredictionNotificationData
         p2.id_partido = t1.id_partido
         AND p2.documento_alumno = a.documento_usuario
       )
-      WHERE p2.documento_alumno IS NULL;`,
+      LEFT JOIN notifica n ON (
+        n.id_partido = t1.id_partido
+        AND n.documento_alumno = a.documento_usuario
+      )
+      WHERE p2.documento_alumno IS NULL
+      AND n.documento_alumno IS NULL;`,
       (err, result) => {
         if (err) { return reject(err); }
 

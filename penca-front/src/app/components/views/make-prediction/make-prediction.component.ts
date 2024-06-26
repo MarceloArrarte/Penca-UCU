@@ -34,9 +34,23 @@ export class MakePredictionComponent {
 
     this.matchData = router.getCurrentNavigation()?.extras.state?.['match'];
     if (!this.matchData) {
-      toastService.error('Error al cargar información del partido.');
+      // No viene en el state de la navegación, lo traigo de la API
+      this.route.paramMap.pipe(
+        switchMap((params) => {
+          const matchId = params.get('id')!;
+          return this.matchesService.getSingleMatch(Number(matchId));
+        })
+      ).subscribe((match: Match) => {
+        this.matchData = match;
+        const fb = new FormBuilder();
+        this.formGroup = fb.group({
+          prediction1: new FormControl<number>(this.matchData.prediccion?.[0] ?? 0, { nonNullable: true }),
+          prediction2: new FormControl<number>(this.matchData.prediccion?.[1] ?? 0, { nonNullable: true })
+        })
+      });
     }
     else {
+      // Ya podemos crear el form
       const fb = new FormBuilder();
       this.formGroup = fb.group({
         prediction1: new FormControl<number>(this.matchData.prediccion?.[0] ?? 0, { nonNullable: true }),

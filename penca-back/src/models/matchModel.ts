@@ -126,6 +126,51 @@ const getMatchesAndPredictions = (userDocument: number, played: string): Promise
   });
 };
 
+const getSingleMatch = (matchId: number, userDocument: number): Promise<Match> => {
+  return new Promise((resolve, reject) => {
+    db.query(`
+      SELECT p.id, p.fecha_hora, p.nombre_fase, e.id AS id_equipo, e.pais, pr.goles AS prediccion_goles, j.goles FROM partido p
+      INNER JOIN juega j on j.id_partido = p.id
+      INNER JOIN equipo e on e.id = j.id_equipo
+      LEFT JOIN  predice pr ON pr.id_equipo = j.id_equipo AND
+      pr.id_partido = j.id_partido AND pr.documento_alumno = ?
+      WHERE p.id = ?
+      ORDER BY p.id;`,
+    [userDocument, matchId], (err, results) => {
+      if (err) { return reject(err); }
+
+      const rows = results as RowDataPacket[];
+      const matchesMap: { [key: number]: Match } = {};
+      
+      rows.forEach(row => {
+        const matchId = row.id;
+
+        if (!matchesMap[matchId]) {
+          matchesMap[matchId] = {
+            id: matchId,
+            date: row.fecha_hora,
+            phase: row.nombre_fase,
+            teams: []
+          };
+        }
+
+        matchesMap[matchId].teams.push(
+          {
+            idTeam: row.id_equipo,
+            country: row.pais,
+            goalsPredict: row.prediccion_goles,
+            goals: row.goles
+          } 
+        )
+      })
+
+      const match: Match = Object.values(matchesMap)[0];
+
+      resolve(match);
+    });
+  });
+};
+
 const updateMatchTeams = (matchId: number, teamIds: number[]): Promise<MatchTeams> => {
   return new Promise((resolve, reject) => {
     db.beginTransaction(err => {
@@ -248,6 +293,7 @@ const getAllMatchesToBeDetermined = (): Promise<Omit<MatchWithResult, 'teams'>[]
 
 export {
   getMatchesAndPredictions,
+  getSingleMatch,
   getAllMatches,
   updateMatchTeams,
   insertOrUpdateMatchResult,

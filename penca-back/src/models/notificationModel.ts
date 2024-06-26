@@ -49,6 +49,7 @@ const markAsSent = (notification: Notification) => {
     return new Promise((resolve, reject) => {
         db.query(
             'UPDATE notifica SET fecha_envio = NOW() WHERE id_partido = ? AND documento_alumno = ?',
+            [notification.id_partido, notification.documento_alumno],
             (err, result) => {
                 if (err) { return reject(err); }
                 resolve(result as Notification[]);

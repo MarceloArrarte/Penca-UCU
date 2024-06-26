@@ -2,6 +2,7 @@ import { CronJob } from "cron";
 import { MissingPredictionNotificationData, getUsersMissingPredictions } from "../models/predictionModel";
 import { insertNotifications } from "../models/notificationModel";
 import { notificationSenderJob } from "./notification-sender";
+import { format } from "date-fns";
 
 const trimLineLeadingSpaces = (str: string) => str.replace(/^[ \t]*/gm, '');
 
@@ -12,7 +13,7 @@ const buildMissingPredictionMessage = (data: MissingPredictionNotificationData) 
 
         Faltan menos de 24 horas para el partido ${data.equipos} de la ${data.fase} y todavía no has ingresado tu predicción.
 
-        El partido comenzará el ${data.fecha_hora}. Recuerda que puedes predecir el resultado hasta una hora antes de que comience ingresando a ${process.env.FRONTEND_URL}/matches/${data.id_partido}/prediction.
+        El partido comenzará el ${format(data.fecha_hora, "dd/MM 'a las' HH:mm")}. Recuerda que puedes predecir el resultado hasta una hora antes de que comience ingresando a ${process.env.FRONTEND_URL}/matches/${data.id_partido}/prediction.
 
         ¡Mucha suerte!
         El Equipo de PencaUCU
@@ -33,7 +34,7 @@ export const upcomingMatchNotificationGeneratorJob = CronJob.from({
         })));
 
         console.log(`[CRON-GEN] ¡Notificaciones generadas! Procesando envíos...`);
-        notificationSenderJob.start();
+        notificationSenderJob.fireOnTick();
     },
     start: true,
     runOnInit: true,
