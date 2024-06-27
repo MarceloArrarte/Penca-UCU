@@ -246,11 +246,11 @@ const insertOrUpdateMatchResult = (
         return new Promise<void>((resolve, reject) => {
           db.query(`
             UPDATE juega
-            SET goles = ?
+            SET goles = ?, penales = ?
             WHERE id_equipo = ?
             AND id_partido = ?`,
-            [teamGoals.goals, teamGoals.teamId, matchId],
-            (err, result) => {
+            [teamGoals.goals, teamGoals.penalesGoals, teamGoals.teamId, matchId],
+            (err, _result) => {
               if (err) { return reject(err); }
 
               resolve();
@@ -271,10 +271,8 @@ const insertOrUpdateMatchResult = (
   });
 }
 
-
-type MatchTeamResult = { teamId: number, goals: number };
+type MatchTeamResult = { teamId: number, goals: number, penalesGoals: number };
 type MatchResult = [MatchTeamResult, MatchTeamResult];
-
 
 const getAllMatchesToBeDetermined = (): Promise<Omit<MatchWithResult, 'teams'>[]> => {
   return new Promise((resolve, reject) => {
