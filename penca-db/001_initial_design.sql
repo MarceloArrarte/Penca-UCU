@@ -62,6 +62,7 @@ CREATE TABLE juega (
 	id_equipo INT UNSIGNED,
     id_partido INT UNSIGNED,
     goles INT UNSIGNED,
+    penales INT UNSIGNED,
     CONSTRAINT pk_juega PRIMARY KEY (id_equipo, id_partido),
     CONSTRAINT fk_juega_equipo FOREIGN KEY (id_equipo) REFERENCES equipo (id),
     CONSTRAINT fk_juega_partido FOREIGN KEY (id_partido) REFERENCES partido (id) 

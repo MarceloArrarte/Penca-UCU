@@ -94,7 +94,7 @@ const getAllUserScores = (): Promise<UserScore[]> => {
                 }
               }
 
-              db.query(`SELECT j.id_equipo, j.goles FROM partido p INNER JOIN juega j ON j.id_partido = p.id 
+              db.query(`SELECT j.id_equipo, j.goles, j.penales FROM partido p INNER JOIN juega j ON j.id_partido = p.id 
                 WHERE p.nombre_fase = "Final" AND j.goles IS NOT NULL;`, (err, results) => {
                   if (err) { return reject(err); }
 
@@ -102,8 +102,8 @@ const getAllUserScores = (): Promise<UserScore[]> => {
 
                   if (finalMatchResults.length !== 2) { return resolve(); }
 
-                  let championId: number;
-                  let runnerUpId: number;
+                  let championId: number = 0;
+                  let runnerUpId: number = 0;
 
                   if (finalMatchResults[0].goles > finalMatchResults[1].goles) {
                     championId = finalMatchResults[0].id_equipo;
@@ -112,8 +112,13 @@ const getAllUserScores = (): Promise<UserScore[]> => {
                     championId = finalMatchResults[1].id_equipo;
                     runnerUpId = finalMatchResults[0].id_equipo;
                   } else {
-                    championId = 0;
-                    runnerUpId = 0;
+                    if (finalMatchResults[0].penales > finalMatchResults[1].penales) {
+                      championId = finalMatchResults[0].id_equipo;
+                      runnerUpId = finalMatchResults[1].id_equipo;
+                    } else if (finalMatchResults[0].penales < finalMatchResults[1].penales) {
+                      championId = finalMatchResults[1].id_equipo;
+                      runnerUpId = finalMatchResults[0].id_equipo;
+                    }
                   }
 
                   if (championId === user.id_campeon && userScore) {
@@ -222,7 +227,6 @@ const createUser = (document: string, name: string, email: string, hashedPasswor
   });
 };
 
-
 const getCareers = (): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     db.query(
@@ -236,7 +240,6 @@ const getCareers = (): Promise<string[]> => {
       });
   });
 }
-
 
 const getProfile = (document: string): Promise<UserProfile> => {
   return new Promise((resolve, reject) => {
